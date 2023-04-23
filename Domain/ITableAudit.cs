@@ -2,7 +2,6 @@ namespace Domain;
 
 public interface ITableAudit
 {
-    public DateTime CreatedAtUtc { get; set; }
-    
-    public DateTime ModifiedAtUtc { get; set; }
+     DateTime Added { get; set; }
+     DateTime Modified { get; set; }
 }

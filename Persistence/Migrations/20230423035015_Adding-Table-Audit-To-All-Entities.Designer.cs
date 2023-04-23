@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence.Configurations.Context;
@@ -11,9 +12,11 @@ using Persistence.Configurations.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(HealthTrackerDbContext))]
-    partial class HealthTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230423035015_Adding-Table-Audit-To-All-Entities")]
+    partial class AddingTableAuditToAllEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

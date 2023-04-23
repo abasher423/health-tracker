@@ -1,3 +1,4 @@
+using Domain;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 using Persistence.Configurations.EntityConfigurations;
@@ -35,5 +36,28 @@ public class HealthTrackerDbContext : DbContext
         healthDataEntryConfiguration.Configure(modelBuilder.Entity<HealthDataEntry>());
         goalConfiguration.Configure(modelBuilder.Entity<Goal>());
         progressConfiguration.Configure(modelBuilder.Entity<Progress>());
+    }
+    
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        // TODO:
+        // Need to implement BaseEntity and replace TableAudit
+        var entries = ChangeTracker
+            .Entries()
+            .Where(e => e.Entity is TableAudit && (
+                e.State == EntityState.Added || e.State == EntityState.Modified));
+
+        foreach (var entityEntry in entries)
+        {
+            ((TableAudit)entityEntry.Entity).Modified = DateTime.UtcNow;
+
+            if (entityEntry.State == EntityState.Added)
+            {
+                ((TableAudit)entityEntry.Entity).Added = DateTime.UtcNow;
+                ((TableAudit)entityEntry.Entity).Modified = DateTime.UtcNow;
+            }
+        }
+
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }

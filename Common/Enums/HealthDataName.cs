@@ -2,7 +2,7 @@ namespace Common.Enums;
 
 public enum HealthDataName
 {
-    NumberOfSteps,
+    NumberOfSteps = 1,
     DistanceTraveled,
     CaloriesBurned,
     HoursOfSleep,
