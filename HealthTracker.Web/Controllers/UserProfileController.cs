@@ -1,4 +1,6 @@
-using Application.API.V1.UserProfiles.Commands;
+using Application.API.V1.UserProfiles.Commands.Create;
+using Application.API.V1.UserProfiles.Commands.Delete;
+using Application.API.V1.UserProfiles.Commands.Update;
 using Application.API.V1.UserProfiles.Models;
 using Application.API.V1.UserProfiles.Queries;
 using MediatR;

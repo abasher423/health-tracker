@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
 
-namespace Application.API.V1.UserProfiles.Commands;
+namespace Application.API.V1.UserProfiles.Commands.Update;
 
 public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileDto>
 {

@@ -2,7 +2,7 @@ using AutoMapper;
 using MediatR;
 using Persistence.Configurations.Context;
 
-namespace Application.API.V1.UserProfiles.Commands;
+namespace Application.API.V1.UserProfiles.Commands.Delete;
 
 public class DeleteUserProfileCommandHandler : IRequestHandler<DeleteUserProfileCommand, bool>
 {
