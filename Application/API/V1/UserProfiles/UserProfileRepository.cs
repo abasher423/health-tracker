@@ -2,6 +2,7 @@ using Application.API.V1.UserProfiles.Commands.Create;
 using Application.API.V1.UserProfiles.Models;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
 
 namespace Application.API.V1.UserProfiles;
@@ -16,8 +17,13 @@ public class UserProfileRepository : IUserProfileRepository
         _context = context;
         _mapper = mapper;
     }
-    
-    
+
+    public async Task<IEnumerable<UserProfileDto>> GetAllUserProfiles(CancellationToken cancellationToken)
+    {
+        var userProfiles = await _context.UserProfiles.ToListAsync(cancellationToken);
+        return _mapper.Map<IEnumerable<UserProfileDto>>(userProfiles);
+    }
+
     public async Task<CreateUserProfileDto> CreateUserProfile(CreateUserProfileCommand userProfile, CancellationToken cancellationToken)
     {
         var userProfileToBeAdded = new UserProfile()

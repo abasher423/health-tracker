@@ -24,11 +24,6 @@ public class UserProfileController : ControllerBase
         var userProfiles = new ListUserProfilesQuery();
         
         var result = await _mediator.Send(userProfiles);
-
-        if (result == null)
-        {
-            return null;
-        }
         
         return Ok(result);
     }
