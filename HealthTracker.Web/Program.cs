@@ -10,6 +10,7 @@ using Application.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
 using AutoMapper.EquivalencyExpression;
+using FluentValidation;
 using MediatR;
 
 
@@ -35,14 +36,16 @@ builder.Services.AddAutoMapper(cfg =>
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
+builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+
 builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, CreateUserProfileDto>, CreateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteUserProfileCommand, bool>, DeleteUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileDto>, UpdateUserProfileCommandHandler>();
 
-builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
-
 builder.Services.AddScoped<IRequestHandler<GetUserProfileQuery, UserProfileDto>, GetUserProfileQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<ListUserProfilesQuery, IEnumerable<UserProfileDto>>, ListUserProfilesQueryHandler>();
+
+builder.Services.AddScoped<IValidator<CreateUserProfileCommand>, CreateUserProfileCommandValidator>();
 
 var app = builder.Build();
 
