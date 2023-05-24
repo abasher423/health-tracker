@@ -16,7 +16,7 @@ public class ListUserProfilesQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_WhenRequestIsValid_ReturnsUserProfiles()
+    public async Task Handle_WhenRequestIsValid_ReturnsUserProfileList()
     {
         // Arrange
         var handler = new ListUserProfilesQueryHandler(_userProfileRepositoryMock.Object);

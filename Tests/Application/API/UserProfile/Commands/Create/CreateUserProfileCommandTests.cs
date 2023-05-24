@@ -11,6 +11,7 @@ public class CreateUserProfileCommandTests
         // Arrange
         var id = new Guid();
         
+        // Act
         var command = new CreateUserProfileCommand()
         {
             Id = id,
