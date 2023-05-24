@@ -6,5 +6,6 @@ namespace Application.API.V1.UserProfiles;
 public interface IUserProfileRepository
 {
     Task<IEnumerable<UserProfileDto>> GetAllUserProfiles(CancellationToken cancellationToken);
+    Task<UserProfileDto> GetSingleUserProfile(Guid id, CancellationToken cancellationToken);
     Task<CreateUserProfileDto> CreateUserProfile(CreateUserProfileCommand userProfile, CancellationToken cancellationToken);
 }

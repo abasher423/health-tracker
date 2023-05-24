@@ -32,7 +32,14 @@ public class UserProfileController : ControllerBase
     public async Task<ActionResult<UserProfileDto>> GetUserProfile(Guid id)
     {
         var userProfile = new GetUserProfileQuery(id);
+        
         var result = await _mediator.Send(userProfile);
+
+        if (result == null)
+        {
+            return NotFound("User profile does not exist for the given id");
+        }
+        
         return Ok(result);
     }
 

@@ -18,6 +18,12 @@ public class UserProfileRepository : IUserProfileRepository
         _mapper = mapper;
     }
 
+    public async Task<UserProfileDto> GetSingleUserProfile(Guid id, CancellationToken cancellationToken)
+    {
+        var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        return _mapper.Map<UserProfileDto>(userProfile);
+    }
+
     public async Task<IEnumerable<UserProfileDto>> GetAllUserProfiles(CancellationToken cancellationToken)
     {
         var userProfiles = await _context.UserProfiles.ToListAsync(cancellationToken);
