@@ -1,8 +1,5 @@
 using Application.API.V1.UserProfiles.Models;
-using AutoMapper;
-using Domain.Entities;
 using MediatR;
-using Persistence.Configurations.Context;
 
 namespace Application.API.V1.UserProfiles.Commands.Create;
 

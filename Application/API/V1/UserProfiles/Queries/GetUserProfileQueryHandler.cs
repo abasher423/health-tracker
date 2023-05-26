@@ -13,13 +13,11 @@ public class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, U
     }
     public async Task<UserProfileDto> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
     {
-        var userProfile = await _userProfileRepository.GetSingleUserProfile(request.Id, cancellationToken);
-
-        if (userProfile == null)
+        if (request == null || request.Id == Guid.Empty)
         {
-            return null;
+            throw new ArgumentNullException();
         }
-
-        return userProfile;
+        
+        return await _userProfileRepository.GetSingleUserProfile(request.Id, cancellationToken);
     }
 }

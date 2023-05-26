@@ -92,6 +92,12 @@ public class UserProfileController : ControllerBase
     {
         var userProfile = new DeleteUserProfileCommand(id);
         var result = await _mediator.Send(userProfile);
-        return NoContent();
+
+        if (result == false)
+        {
+            return NoContent();
+        }
+        
+        return Accepted();
     }
 }

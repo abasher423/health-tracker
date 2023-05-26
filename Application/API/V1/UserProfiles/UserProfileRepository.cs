@@ -1,4 +1,5 @@
 using Application.API.V1.UserProfiles.Commands.Create;
+using Application.API.V1.UserProfiles.Commands.Update;
 using Application.API.V1.UserProfiles.Models;
 using AutoMapper;
 using Domain.Entities;
@@ -45,5 +46,40 @@ public class UserProfileRepository : IUserProfileRepository
         await _context.SaveChangesAsync(cancellationToken);
         
         return _mapper.Map<CreateUserProfileDto>(userProfile);
+    }
+
+    public async Task<UpdateUserProfileDto> UpdateUserProfile(UpdateUserProfileCommand userProfile, CancellationToken cancellationToken)
+    {
+        var userProfileToUpdate = _context.UserProfiles.FirstOrDefault(x => x.Id == userProfile.Id);
+
+        if (userProfileToUpdate == null)
+        {
+            return null;
+        }
+
+        userProfileToUpdate.Gender = userProfile.Gender;
+        userProfileToUpdate.Age = userProfile.Age;
+        userProfileToUpdate.Height = userProfile.Height;
+        userProfileToUpdate.Weight = userProfile.Weight;
+
+        _context.Entry(userProfileToUpdate).State = EntityState.Modified;
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return _mapper.Map<UpdateUserProfileDto>(userProfileToUpdate);
+    }
+
+    public async Task<bool> DeleteUserProfile(Guid id, CancellationToken cancellationToken)
+    {
+        var userProfileToDelete = _context.UserProfiles.FirstOrDefault(x => x.Id == id);
+
+        if (userProfileToDelete == null)
+        {
+            return false;
+        }
+
+        _context.UserProfiles.Remove(userProfileToDelete);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return true;
     }
 }

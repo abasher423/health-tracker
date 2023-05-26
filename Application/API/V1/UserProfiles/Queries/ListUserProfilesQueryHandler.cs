@@ -14,13 +14,6 @@ public class ListUserProfilesQueryHandler : IRequestHandler<ListUserProfilesQuer
     
     public async Task<IEnumerable<UserProfileDto>> Handle(ListUserProfilesQuery request, CancellationToken cancellationToken)
     {
-        var userProfiles = await _userProfileRepository.GetAllUserProfiles(cancellationToken);
-        
-        if (request == null)
-        {
-            return null;
-        }
-
-        return userProfiles;
+        return await _userProfileRepository.GetAllUserProfiles(cancellationToken);
     }
 }
