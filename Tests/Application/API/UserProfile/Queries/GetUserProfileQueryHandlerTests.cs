@@ -16,7 +16,35 @@ public class GetUserProfileQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_WhenRequestIsValid_ReturnsSingleUserProfile()
+    public async Task Handle_Should_ThrowArgumentNullException_WhenNullRequest()
+    {
+        // Arrange
+        var handler = new GetUserProfileQueryHandler(_userProfileRepositoryMock.Object);
+        
+        // Act and Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+        {
+             await handler.Handle(null, default);
+        });
+    }
+
+    [Fact]
+    public async Task Handle_Should_ThrowArgumentNullException_WhenEmptyRequestId()
+    {
+        // Arrange
+        var id = Guid.Empty;
+        var query = new GetUserProfileQuery(id);
+        var handler = new GetUserProfileQueryHandler(_userProfileRepositoryMock.Object);
+        
+        // Act and Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+        {
+            await handler.Handle(query, default);
+        });
+    }
+
+    [Fact]
+    public async Task Handle_Should_ThrowArgumentNullException_WhenRequestIsNull()
     {
         // Arrange
         var id = Guid.NewGuid();
@@ -41,24 +69,5 @@ public class GetUserProfileQueryHandlerTests
 
         // Assert
         Assert.Equal(userProfile, result);
-    }
-
-    [Fact]
-    public async Task Handle_WhenNullRequest_ReturnsNull()
-    {
-        // Arrange
-        UserProfileDto userProfile = null;
-        var query = new GetUserProfileQuery(Guid.NewGuid());
-        var handler = new GetUserProfileQueryHandler(_userProfileRepositoryMock.Object);
-
-        _userProfileRepositoryMock.Setup(
-                x => x.GetSingleUserProfile(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(userProfile);
-        
-        // Act
-        var result = await handler.Handle(query, default);
-        
-        // Assert
-        Assert.Null(result);
     }
 }

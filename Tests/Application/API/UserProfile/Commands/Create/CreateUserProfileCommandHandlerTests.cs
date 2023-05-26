@@ -16,7 +16,7 @@ public class CreateUserProfileCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_Should_ReturnArgumentNullException_WhenRequestIsNull()
+    public async Task Handle_Should_ThrowArgumentNullException_WhenRequestIsNull()
     {
         // Arrange
         var handler = new CreateUserProfileCommandHandler(_userProfileRepositoryMock.Object);

@@ -59,7 +59,7 @@ public class ListUserProfilesQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_NullUserProfiles_ReturnsNull()
+    public async Task Handle_Should_ReturnNull_WhenNullUserProfiles()
     {
         // Arrange
         var query = new ListUserProfilesQuery();
