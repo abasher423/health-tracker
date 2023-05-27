@@ -1,32 +1,23 @@
-using AutoMapper;
 using MediatR;
-using Persistence.Configurations.Context;
 
-namespace Application.API.V1.UserProfiles.Commands;
+namespace Application.API.V1.UserProfiles.Commands.Delete;
 
 public class DeleteUserProfileCommandHandler : IRequestHandler<DeleteUserProfileCommand, bool>
 {
-    private readonly HealthTrackerDbContext _context;
-    private readonly IMapper _mapper;
+    private readonly IUserProfileRepository _userProfileRepository;
 
-    public DeleteUserProfileCommandHandler(HealthTrackerDbContext context, IMapper mapper)
+    public DeleteUserProfileCommandHandler(IUserProfileRepository userProfileRepository)
     {
-        _context = context;
-        _mapper = mapper;
+        _userProfileRepository = userProfileRepository;
     }
     
     public async Task<bool> Handle(DeleteUserProfileCommand request, CancellationToken cancellationToken)
     {
-        var userProfileToDelete = _context.UserProfiles.FirstOrDefault(x => x.Id == request.Id);
-
-        if (userProfileToDelete == null)
+        if (request == null || request.Id == Guid.Empty)
         {
-            return false;
+            throw new ArgumentNullException();
         }
-
-        _context.UserProfiles.Remove(userProfileToDelete);
-        await _context.SaveChangesAsync(cancellationToken);
-
-        return true;
+        
+        return  await _userProfileRepository.DeleteUserProfile(request.Id, cancellationToken);
     }
 }

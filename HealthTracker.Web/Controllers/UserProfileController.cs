@@ -1,4 +1,6 @@
-using Application.API.V1.UserProfiles.Commands;
+using Application.API.V1.UserProfiles.Commands.Create;
+using Application.API.V1.UserProfiles.Commands.Delete;
+using Application.API.V1.UserProfiles.Commands.Update;
 using Application.API.V1.UserProfiles.Models;
 using Application.API.V1.UserProfiles.Queries;
 using MediatR;
@@ -22,11 +24,6 @@ public class UserProfileController : ControllerBase
         var userProfiles = new ListUserProfilesQuery();
         
         var result = await _mediator.Send(userProfiles);
-
-        if (result == null)
-        {
-            return null;
-        }
         
         return Ok(result);
     }
@@ -35,7 +32,14 @@ public class UserProfileController : ControllerBase
     public async Task<ActionResult<UserProfileDto>> GetUserProfile(Guid id)
     {
         var userProfile = new GetUserProfileQuery(id);
+        
         var result = await _mediator.Send(userProfile);
+
+        if (result == null)
+        {
+            return NotFound("User profile does not exist for the given id");
+        }
+        
         return Ok(result);
     }
 
@@ -88,6 +92,12 @@ public class UserProfileController : ControllerBase
     {
         var userProfile = new DeleteUserProfileCommand(id);
         var result = await _mediator.Send(userProfile);
-        return NoContent();
+
+        if (result == false)
+        {
+            return NoContent();
+        }
+        
+        return Accepted();
     }
 }
