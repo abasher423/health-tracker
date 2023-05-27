@@ -15,7 +15,7 @@ public class DeleteUserProfileCommandHandler : IRequestHandler<DeleteUserProfile
     {
         if (request == null || request.Id == Guid.Empty)
         {
-            throw new ArgumentException();
+            throw new ArgumentNullException();
         }
         
         return  await _userProfileRepository.DeleteUserProfile(request.Id, cancellationToken);

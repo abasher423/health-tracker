@@ -6,7 +6,7 @@ namespace Tests.Application.API.UserProfile.Commands.Create;
 public class CreateUserProfileCommandTests
 {
     [Fact]
-    public void CreateUserProfileCommand_Properties_ShouldBeSetCorrectly()
+    public void Ctor_Properties_ShouldBeSetCorrectly()
     {
         // Arrange
         var id = new Guid();
