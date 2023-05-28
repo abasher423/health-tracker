@@ -25,12 +25,14 @@ public class HealthTrackerDbContext : DbContext
     {
         modelBuilder.HasDefaultSchema("health");
 
+        var userConfiguration = new UserEntityBuilder();
         var userProfileConfiguration = new UserProfileEntityBuilder();
         var healthMetricConfiguration = new HealthMetricEntityBuilder();
         var healthDataEntryConfiguration = new HealthDataEntryEntityBuilder();
         var goalConfiguration = new GoalEntityBuilder();
         var progressConfiguration = new ProgressEntityBuilder();
         
+        userConfiguration.Configure(modelBuilder.Entity<User>());
         userProfileConfiguration.Configure(modelBuilder.Entity<UserProfile>());
         healthMetricConfiguration.Configure(modelBuilder.Entity<HealthMetric>());
         healthDataEntryConfiguration.Configure(modelBuilder.Entity<HealthDataEntry>());
@@ -40,8 +42,6 @@ public class HealthTrackerDbContext : DbContext
     
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        // TODO:
-        // Need to implement BaseEntity and replace TableAudit
         var entries = ChangeTracker
             .Entries()
             .Where(e => e.Entity is TableAudit && (
@@ -49,12 +49,12 @@ public class HealthTrackerDbContext : DbContext
 
         foreach (var entityEntry in entries)
         {
-            ((TableAudit)entityEntry.Entity).Modified = DateTime.UtcNow;
+            ((BaseEntity)entityEntry.Entity).Modified = DateTime.UtcNow;
 
             if (entityEntry.State == EntityState.Added)
             {
-                ((TableAudit)entityEntry.Entity).Added = DateTime.UtcNow;
-                ((TableAudit)entityEntry.Entity).Modified = DateTime.UtcNow;
+                ((BaseEntity)entityEntry.Entity).Added = DateTime.UtcNow;
+                ((BaseEntity)entityEntry.Entity).Modified = DateTime.UtcNow;
             }
         }
 
