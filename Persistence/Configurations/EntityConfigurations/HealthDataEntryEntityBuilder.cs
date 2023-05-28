@@ -14,5 +14,10 @@ public class HealthDataEntryEntityBuilder : IEntityTypeConfiguration<HealthDataE
         builder.Property(x => x.Id).IsRequired().HasColumnName("id");
         builder.Property(x => x.Name).IsRequired().HasColumnName("name");
         builder.Property(x => x.Value).IsRequired().HasColumnName("value");
+
+        builder.HasOne<User>(hde => hde.User)
+            .WithMany(u => u.HealthDataEntries)
+            .HasForeignKey(hde => hde.UserId)
+            .HasConstraintName("fk_user_id");
     }
 }
