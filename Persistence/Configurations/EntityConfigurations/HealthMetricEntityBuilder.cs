@@ -14,5 +14,11 @@ public class HealthMetricEntityBuilder : IEntityTypeConfiguration<HealthMetric>
         builder.Property(x => x.Id).IsRequired().HasColumnName("id");
         builder.Property(x => x.Type).IsRequired().HasColumnName("type");
         builder.Property(x => x.UnitOfMeasurement).IsRequired().HasColumnName("unit_of_measurement");
+
+        // configure one to many relationship using FluentAPI (configured on the "one" side of the relationship)
+        builder.HasMany<HealthDataEntry>(hm => hm.HealthDataEntries)
+            .WithOne(hde => hde.HealthMetric)
+            .HasForeignKey(hde => hde.HealthMetricId)
+            .HasConstraintName("fk_health_metric_id");
     }
 }

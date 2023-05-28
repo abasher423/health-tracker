@@ -1,14 +1,11 @@
 namespace Domain.Entities;
 
-public class Goal : TableAudit
+public class Goal : BaseEntity
 {
-    public Guid Id { get; set; }
-    
+    public Guid UserId { get; set; }
     public string Name { get; set; }
-    
     public decimal Target { get; set; }
-    
-    public HealthDataEntry HealthDataEntry { get; set; }
-    
+    public User User { get; set; }
     public ICollection<Progress> Progresses { get; set; }
+
 }
