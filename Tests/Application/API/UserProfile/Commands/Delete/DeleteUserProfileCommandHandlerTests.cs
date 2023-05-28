@@ -1,5 +1,6 @@
 using Application.API.V1.UserProfiles;
 using Application.API.V1.UserProfiles.Commands.Delete;
+using Application.Repositories.UserProfile;
 using Moq;
 
 namespace Tests.Application.API.UserProfile.Commands.Delete;

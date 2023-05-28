@@ -7,6 +7,7 @@ using Application.API.V1.UserProfiles.Commands.Update;
 using Application.API.V1.UserProfiles.Models;
 using Application.API.V1.UserProfiles.Queries;
 using Application.Mapping;
+using Application.Repositories.UserProfile;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
 using AutoMapper.EquivalencyExpression;

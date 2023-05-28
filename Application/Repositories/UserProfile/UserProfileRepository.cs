@@ -2,11 +2,10 @@ using Application.API.V1.UserProfiles.Commands.Create;
 using Application.API.V1.UserProfiles.Commands.Update;
 using Application.API.V1.UserProfiles.Models;
 using AutoMapper;
-using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
 
-namespace Application.API.V1.UserProfiles;
+namespace Application.Repositories.UserProfile;
 
 public class UserProfileRepository : IUserProfileRepository
 {
@@ -33,7 +32,7 @@ public class UserProfileRepository : IUserProfileRepository
 
     public async Task<CreateUserProfileDto> CreateUserProfile(CreateUserProfileCommand userProfile, CancellationToken cancellationToken)
     {
-        var userProfileToBeAdded = new UserProfile()
+        var userProfileToBeAdded = new Domain.Entities.UserProfile()
         {
             Id = new Guid(),
             Age = userProfile.Age,

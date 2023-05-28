@@ -1,3 +1,4 @@
+using Application.Repositories.UserProfile;
 using MediatR;
 
 namespace Application.API.V1.UserProfiles.Commands.Delete;

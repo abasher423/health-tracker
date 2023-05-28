@@ -2,7 +2,7 @@ using Application.API.V1.UserProfiles.Commands.Create;
 using Application.API.V1.UserProfiles.Commands.Update;
 using Application.API.V1.UserProfiles.Models;
 
-namespace Application.API.V1.UserProfiles;
+namespace Application.Repositories.UserProfile;
 
 public interface IUserProfileRepository
 {

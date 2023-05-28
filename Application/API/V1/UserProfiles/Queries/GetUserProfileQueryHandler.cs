@@ -1,4 +1,5 @@
 using Application.API.V1.UserProfiles.Models;
+using Application.Repositories.UserProfile;
 using MediatR;
 
 namespace Application.API.V1.UserProfiles.Queries;

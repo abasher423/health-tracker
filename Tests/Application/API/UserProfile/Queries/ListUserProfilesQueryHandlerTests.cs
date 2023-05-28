@@ -1,6 +1,7 @@
 using Application.API.V1.UserProfiles;
 using Application.API.V1.UserProfiles.Models;
 using Application.API.V1.UserProfiles.Queries;
+using Application.Repositories.UserProfile;
 using Common.Enums;
 using Moq;
 
