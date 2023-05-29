@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Create;
 
-public class CreateUserProfileCommand : IRequest<CreateUserProfileDto>
+public class CreateUserProfileCommand : IRequest<CreateUserProfileModel>
 {
     public Guid Id { get; set; }
     public int Age { get; set; }

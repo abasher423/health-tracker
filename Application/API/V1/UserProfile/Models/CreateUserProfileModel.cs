@@ -2,7 +2,7 @@ using Common.Enums;
 
 namespace Application.API.V1.UserProfile.Models;
 
-public class CreateUserProfileDto
+public class CreateUserProfileModel
 {
     public Guid Id { get; set; }
     public int Age { get; set; }

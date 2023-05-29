@@ -44,7 +44,7 @@ public class CreateUserProfileCommandHandlerTests
             Weight = 128
         };
 
-        var createUserProfileDto = new CreateUserProfileDto()
+        var createUserProfileDto = new CreateUserProfileModel()
         {
             Id = new Guid(),
             Age = 27,
