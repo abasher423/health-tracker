@@ -1,5 +1,5 @@
-using Application.API.V1.UserProfiles;
-using Application.API.V1.UserProfiles.Commands.Delete;
+using Application.API.V1.UserProfile.Commands.Delete;
+using Application.API.V1.UserProfile;
 using Application.Repositories.UserProfile;
 using Moq;
 

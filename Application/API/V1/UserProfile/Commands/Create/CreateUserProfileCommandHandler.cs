@@ -1,8 +1,8 @@
-using Application.API.V1.UserProfiles.Models;
+using Application.API.V1.UserProfile.Models;
 using Application.Repositories.UserProfile;
 using MediatR;
 
-namespace Application.API.V1.UserProfiles.Commands.Create;
+namespace Application.API.V1.UserProfile.Commands.Create;
 
 public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfileCommand, CreateUserProfileDto>
 {

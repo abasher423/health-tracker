@@ -1,5 +1,5 @@
-using Application.API.V1.UserProfiles;
-using Application.API.V1.UserProfiles.Queries;
+using Application.API.V1.UserProfile.Queries;
+using Application.API.V1.UserProfile;
 using Application.Repositories.UserProfile;
 using Moq;
 

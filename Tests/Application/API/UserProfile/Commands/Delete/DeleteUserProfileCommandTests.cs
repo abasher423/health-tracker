@@ -1,4 +1,4 @@
-using Application.API.V1.UserProfiles.Commands.Delete;
+using Application.API.V1.UserProfile.Commands.Delete;
 
 namespace Tests.Application.API.UserProfile.Commands.Delete;
 

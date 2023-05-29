@@ -1,6 +1,6 @@
 using Common.Enums;
 
-namespace Application.API.V1.UserProfiles.Models;
+namespace Application.API.V1.UserProfile.Models;
 
 public class CreateUserProfileDto
 {

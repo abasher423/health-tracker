@@ -1,7 +1,7 @@
 using Application.Repositories.UserProfile;
 using MediatR;
 
-namespace Application.API.V1.UserProfiles.Commands.Delete;
+namespace Application.API.V1.UserProfile.Commands.Delete;
 
 public class DeleteUserProfileCommandHandler : IRequestHandler<DeleteUserProfileCommand, bool>
 {
