@@ -1,3 +1,5 @@
+using Application.API.V1.UserProfile.Commands.Create;
+using Application.API.V1.UserProfile.Commands.Update;
 using Application.API.V1.UserProfile.Models;
 using AutoMapper;
 using Domain.Entities;
@@ -12,6 +14,9 @@ public class UserProfileProfile : Profile
         CreateMap<UserProfile, UserProfileModel>().ReverseMap();
         CreateMap<UserProfile, CreateUserProfileModel>().ReverseMap();
         CreateMap<UserProfile, UpdateUserProfileModel>().ReverseMap();
+
+        CreateMap<CreateUserProfileCommand, CreateUserProfileModel>().ReverseMap();
+        CreateMap<UpdateUserProfileCommand, UpdateUserProfileModel>().ReverseMap();
 
         CreateMap<UserProfileModel, UserProfileDto>().ReverseMap();
         CreateMap<CreateUserProfileModel, CreateUserProfileDto>().ReverseMap();

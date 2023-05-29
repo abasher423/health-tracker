@@ -35,6 +35,7 @@ public class UserProfileRepository : IUserProfileRepository
         var userProfileToBeAdded = new Domain.Entities.UserProfile()
         {
             Id = new Guid(),
+            UserId = userProfile.UserId,
             Age = userProfile.Age,
             Gender = userProfile.Gender,
             Height = userProfile.Height,
@@ -56,6 +57,7 @@ public class UserProfileRepository : IUserProfileRepository
             return null;
         }
 
+        userProfileToUpdate.UserId = userProfile.UserId;
         userProfileToUpdate.Gender = userProfile.Gender;
         userProfileToUpdate.Age = userProfile.Age;
         userProfileToUpdate.Height = userProfile.Height;

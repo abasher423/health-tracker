@@ -49,6 +49,7 @@ public class UserProfileController : ControllerBase
     {
         var command = new CreateUserProfileCommand()
         {
+            UserId = userProfile.UserId,
             Age = userProfile.Age,
             Gender = userProfile.Gender,
             Height = userProfile.Height,
@@ -71,6 +72,7 @@ public class UserProfileController : ControllerBase
         var command = new UpdateUserProfileCommand()
         {
             Id = id,
+            UserId = userProfile.UserId,
             Age = userProfile.Age,
             Gender = userProfile.Gender,
             Height = userProfile.Height,
