@@ -1,8 +1,8 @@
-using Application.API.V1.UserProfiles.Models;
+using Application.API.V1.UserProfile.Models;
 using Application.Repositories.UserProfile;
 using MediatR;
 
-namespace Application.API.V1.UserProfiles.Queries;
+namespace Application.API.V1.UserProfile.Queries;
 
 public class ListUserProfilesQueryHandler : IRequestHandler<ListUserProfilesQuery, IEnumerable<UserProfileDto>>
 {

@@ -1,10 +1,8 @@
-using Application.API.V1.UserProfiles.Models;
 using Common.Enums;
-using MediatR;
 
-namespace Application.API.V1.UserProfiles.Commands.Update;
+namespace Application.API.V1.UserProfile.Models;
 
-public class UpdateUserProfileCommand : IRequest<UpdateUserProfileDto>
+public class UpdateUserProfileDto
 {
     public Guid Id { get; set; }
     public int Age { get; set; }

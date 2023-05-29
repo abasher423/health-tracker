@@ -1,8 +1,8 @@
-using Application.API.V1.UserProfiles.Commands.Create;
-using Application.API.V1.UserProfiles.Commands.Delete;
-using Application.API.V1.UserProfiles.Commands.Update;
-using Application.API.V1.UserProfiles.Models;
-using Application.API.V1.UserProfiles.Queries;
+using Application.API.V1.UserProfile.Commands.Create;
+using Application.API.V1.UserProfile.Commands.Delete;
+using Application.API.V1.UserProfile.Commands.Update;
+using Application.API.V1.UserProfile.Models;
+using Application.API.V1.UserProfile.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
