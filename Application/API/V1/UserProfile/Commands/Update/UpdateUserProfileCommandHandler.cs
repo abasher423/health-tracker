@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Update;
 
-public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileDto>
+public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileModel>
 {
     private readonly IUserProfileRepository _userProfileRepository;
 
@@ -13,7 +13,7 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
         _userProfileRepository = userProfileRepository;
     }
     
-    public async Task<UpdateUserProfileDto> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateUserProfileModel> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
     {
         if (request == null)
         {

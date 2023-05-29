@@ -18,19 +18,19 @@ public class UserProfileRepository : IUserProfileRepository
         _mapper = mapper;
     }
 
-    public async Task<UserProfileDto> GetSingleUserProfile(Guid id, CancellationToken cancellationToken)
+    public async Task<UserProfileModel> GetSingleUserProfile(Guid id, CancellationToken cancellationToken)
     {
         var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-        return _mapper.Map<UserProfileDto>(userProfile);
+        return _mapper.Map<UserProfileModel>(userProfile);
     }
 
-    public async Task<IEnumerable<UserProfileDto>> GetAllUserProfiles(CancellationToken cancellationToken)
+    public async Task<IEnumerable<UserProfileModel>> GetAllUserProfiles(CancellationToken cancellationToken)
     {
         var userProfiles = await _context.UserProfiles.ToListAsync(cancellationToken);
-        return _mapper.Map<IEnumerable<UserProfileDto>>(userProfiles);
+        return _mapper.Map<IEnumerable<UserProfileModel>>(userProfiles);
     }
 
-    public async Task<CreateUserProfileDto> CreateUserProfile(CreateUserProfileCommand userProfile, CancellationToken cancellationToken)
+    public async Task<CreateUserProfileModel> CreateUserProfile(CreateUserProfileCommand userProfile, CancellationToken cancellationToken)
     {
         var userProfileToBeAdded = new Domain.Entities.UserProfile()
         {
@@ -44,10 +44,10 @@ public class UserProfileRepository : IUserProfileRepository
         await _context.UserProfiles.AddAsync(userProfileToBeAdded, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         
-        return _mapper.Map<CreateUserProfileDto>(userProfile);
+        return _mapper.Map<CreateUserProfileModel>(userProfile);
     }
 
-    public async Task<UpdateUserProfileDto> UpdateUserProfile(UpdateUserProfileCommand userProfile, CancellationToken cancellationToken)
+    public async Task<UpdateUserProfileModel> UpdateUserProfile(UpdateUserProfileCommand userProfile, CancellationToken cancellationToken)
     {
         var userProfileToUpdate = _context.UserProfiles.FirstOrDefault(x => x.Id == userProfile.Id);
 
@@ -64,7 +64,7 @@ public class UserProfileRepository : IUserProfileRepository
         _context.Entry(userProfileToUpdate).State = EntityState.Modified;
         await _context.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<UpdateUserProfileDto>(userProfileToUpdate);
+        return _mapper.Map<UpdateUserProfileModel>(userProfileToUpdate);
     }
 
     public async Task<bool> DeleteUserProfile(Guid id, CancellationToken cancellationToken)

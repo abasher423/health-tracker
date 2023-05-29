@@ -3,6 +3,6 @@ using MediatR;
 
 namespace Application.API.V1.UserProfile.Queries;
 
-public class ListUserProfilesQuery : IRequest<IEnumerable<UserProfileDto>>
+public class ListUserProfilesQuery : IRequest<IEnumerable<UserProfileModel>>
 {
 }

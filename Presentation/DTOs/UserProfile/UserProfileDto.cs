@@ -1,6 +1,6 @@
 using Common.Enums;
 
-namespace Application.API.V1.UserProfile.Models;
+namespace HealthTracker.DTOs.UserProfile;
 
 public class UserProfileDto
 {

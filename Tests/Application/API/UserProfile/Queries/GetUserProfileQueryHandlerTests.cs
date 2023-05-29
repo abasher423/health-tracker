@@ -52,7 +52,7 @@ public class GetUserProfileQueryHandlerTests
         var query = new GetUserProfileQuery(id);
         var handler = new GetUserProfileQueryHandler(_userProfileRepositoryMock.Object);
         
-        var userProfile = new UserProfileDto()
+        var userProfile = new UserProfileModel()
         {
             Id = id,
             Age = 27,

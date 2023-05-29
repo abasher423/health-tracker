@@ -6,12 +6,12 @@ using Application.API.V1.UserProfile.Models;
 using Application.API.V1.UserProfile.Queries;
 using Application.API.V1.UserProfile;
 using Application.API.V1.UserProfile.Commands;
-using Application.Mapping;
 using Application.Repositories.UserProfile;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
 using AutoMapper.EquivalencyExpression;
 using FluentValidation;
+using HealthTracker.Mappings;
 using MediatR;
 
 
@@ -32,19 +32,19 @@ builder.Services.AddDbContext<HealthTrackerDbContext>(
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddCollectionMappers();
-    cfg.AddMaps(typeof(UserProfilesProfile));
+    cfg.AddMaps(typeof(UserProfileProfile));
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 
-builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, CreateUserProfileDto>, CreateUserProfileCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, CreateUserProfileModel>, CreateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteUserProfileCommand, bool>, DeleteUserProfileCommandHandler>();
-builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileDto>, UpdateUserProfileCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileModel>, UpdateUserProfileCommandHandler>();
 
-builder.Services.AddScoped<IRequestHandler<GetUserProfileQuery, UserProfileDto>, GetUserProfileQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<ListUserProfilesQuery, IEnumerable<UserProfileDto>>, ListUserProfilesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetUserProfileQuery, UserProfileModel>, GetUserProfileQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<ListUserProfilesQuery, IEnumerable<UserProfileModel>>, ListUserProfilesQueryHandler>();
 
 builder.Services.AddScoped<IValidator<CreateUserProfileCommand>, CreateUserProfileCommandValidator>();
 

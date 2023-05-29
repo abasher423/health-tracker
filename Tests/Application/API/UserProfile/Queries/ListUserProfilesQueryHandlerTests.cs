@@ -22,23 +22,23 @@ public class ListUserProfilesQueryHandlerTests
         // Arrange
         var handler = new ListUserProfilesQueryHandler(_userProfileRepositoryMock.Object);
         var query = new ListUserProfilesQuery();
-        var userProfiles = new List<UserProfileDto>()
+        var userProfiles = new List<UserProfileModel>()
         {
-            new UserProfileDto()
+            new UserProfileModel()
             {
                 Age = 27,
                 Gender = Gender.Female,
                 Height = 150,
                 Weight = 62
             },
-            new UserProfileDto()
+            new UserProfileModel()
             {
                 Age = 27,
                 Gender = Gender.Male,
                 Height = 192,
                 Weight = 90
             },
-            new UserProfileDto()
+            new UserProfileModel()
             {
                 Age = 18,
                 Gender = Gender.Female,
@@ -65,7 +65,7 @@ public class ListUserProfilesQueryHandlerTests
         // Arrange
         var query = new ListUserProfilesQuery();
         var handler = new ListUserProfilesQueryHandler(_userProfileRepositoryMock.Object);
-        List<UserProfileDto> userProfiles = null;
+        List<UserProfileModel> userProfiles = null;
 
         _userProfileRepositoryMock.Setup(
                 x => x.GetAllUserProfiles(It.IsAny<CancellationToken>()))

@@ -3,6 +3,7 @@ using Application.API.V1.UserProfile.Commands.Delete;
 using Application.API.V1.UserProfile.Commands.Update;
 using Application.API.V1.UserProfile.Models;
 using Application.API.V1.UserProfile.Queries;
+using HealthTracker.DTOs.UserProfile;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,7 +49,6 @@ public class UserProfileController : ControllerBase
     {
         var command = new CreateUserProfileCommand()
         {
-            Id = userProfile.Id,
             Age = userProfile.Age,
             Gender = userProfile.Gender,
             Height = userProfile.Height,
@@ -65,12 +65,12 @@ public class UserProfileController : ControllerBase
         return CreatedAtAction("GetUserProfile", new { Id = result.Id }, result);
     }
 
-    [HttpPut("update")]
-    public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileDto userProfile)
+    [HttpPut("update/{id:guid}")]
+    public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileDto userProfile, Guid id)
     {
         var command = new UpdateUserProfileCommand()
         {
-            Id = userProfile.Id,
+            Id = id,
             Age = userProfile.Age,
             Gender = userProfile.Gender,
             Height = userProfile.Height,
