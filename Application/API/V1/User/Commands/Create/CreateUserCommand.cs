@@ -5,6 +5,11 @@ namespace Application.API.V1.User.Commands.Create;
 
 public class CreateUserCommand : IRequest<UserModel>
 {
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    
     public CreateUserCommand(CreateUserModel user)
     {
         Email = user.Email;
@@ -12,9 +17,4 @@ public class CreateUserCommand : IRequest<UserModel>
         FirstName = user.FirstName;
         LastName = user.LastName;
     }
-    
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
 }
