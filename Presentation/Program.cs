@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Application.API.V1.User.Commands.Create;
+using Application.API.V1.User.Commands.Delete;
 using Application.API.V1.User.Commands.Update;
 using Application.API.V1.User.Models;
 using Application.API.V1.User.Queries;
@@ -47,9 +48,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 // commands
 builder.Services.AddScoped<IRequestHandler<CreateUserCommand, UserModel>, CreateUserCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, CreateUserProfileModel>, CreateUserProfileCommandHandler>();
-builder.Services.AddScoped<IRequestHandler<DeleteUserProfileCommand, bool>, DeleteUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileModel>, UpdateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserCommand, UpdateUserModel>, UpdateUserCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteUserProfileCommand, bool>, DeleteUserProfileCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
 
 // queries
 builder.Services.AddScoped<IRequestHandler<GetUserProfileQuery, UserProfileModel>, GetUserProfileQueryHandler>();

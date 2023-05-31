@@ -1,4 +1,5 @@
 using Application.API.V1.User.Commands.Create;
+using Application.API.V1.User.Commands.Delete;
 using Application.API.V1.User.Commands.Update;
 using Application.API.V1.User.Models;
 using Application.API.V1.User.Queries;
@@ -72,5 +73,20 @@ public class UsersController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpDelete("delete/{id:guid}")]
+    public async Task<IActionResult> DeleteUser(Guid id)
+    {
+        var command = new DeleteUserCommand(id);
+
+        var result = await _mediator.Send(command);
+
+        if (!result)
+        {
+            return NoContent();
+        }
+
+        return Accepted();
     }
 }

@@ -10,4 +10,5 @@ public interface IUserRepository
     Task<UserModel> GetSingleUser(Guid id, CancellationToken cancellationToken);
     Task<UserModel> CreateUser(CreateUserCommand user, CancellationToken cancellationToken);
     Task<UpdateUserModel> UpdateUser(UpdateUserCommand user, CancellationToken cancellationToken);
+    Task<bool> DeleteUser(Guid id, CancellationToken cancellationToken);
 }

@@ -68,4 +68,19 @@ public class UserRepository : IUserRepository
 
         return _mapper.Map<UpdateUserModel>(userToUpdate);
     }
+
+    public async Task<bool> DeleteUser(Guid id, CancellationToken cancellationToken)
+    {
+        var userToDelete = await _context.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        if (userToDelete == null)
+        {
+            return false;
+        }
+
+        _context.Users.Remove(userToDelete);
+        await _context.SaveChangesAsync(cancellationToken);
+        
+        return true;
+    }
 }

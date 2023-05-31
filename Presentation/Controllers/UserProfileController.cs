@@ -96,7 +96,7 @@ public class UserProfileController : ControllerBase
         var userProfile = new DeleteUserProfileCommand(id);
         var result = await _mediator.Send(userProfile);
 
-        if (result == false)
+        if (!result)
         {
             return NoContent();
         }
