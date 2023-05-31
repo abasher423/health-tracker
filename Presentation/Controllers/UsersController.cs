@@ -1,5 +1,6 @@
 using Application.API.V1.User.Commands.Create;
 using Application.API.V1.User.Models;
+using Application.API.V1.User.Queries;
 using HealthTracker.DTOs.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,16 @@ public class UsersController : ControllerBase
     public UsersController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+    {
+        var query = new ListUsersQuery();
+        
+        var result = await _mediator.Send(query);
+        
+        return Ok(result);
     }
 
     [HttpPost("create")]

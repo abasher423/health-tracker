@@ -2,6 +2,7 @@ using Application.API.V1.User.Commands.Create;
 using Application.API.V1.User.Models;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
 
 namespace Application.Repositories.User;
@@ -16,7 +17,13 @@ public class UserRepository : IUserRepository
         _context = context;
         _mapper = mapper;
     }
-    
+
+    public async Task<IEnumerable<UserModel>> GetUsers(CancellationToken cancellationToken)
+    {
+        var users = await _context.Users.ToListAsync(cancellationToken);
+        return _mapper.Map<IEnumerable<UserModel>>(users);
+    }
+
     public async Task<UserModel> CreateUser(CreateUserCommand user, CancellationToken cancellationToken)
     {
         var userToBeAdded = new Domain.Entities.User()
