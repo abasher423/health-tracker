@@ -6,5 +6,6 @@ namespace Application.Repositories.User;
 public interface IUserRepository
 {
     Task<IEnumerable<UserModel>> GetUsers(CancellationToken cancellationToken);
+    Task<UserModel> GetSingleUser(Guid id, CancellationToken cancellationToken);
     Task<UserModel> CreateUser(CreateUserCommand user, CancellationToken cancellationToken);
 }

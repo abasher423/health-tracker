@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthTracker.Controllers;
 
-[Route("[controller]")]
+[Route("api/users")]
 [ApiController]
 public class UsersController : ControllerBase
 {
@@ -28,6 +28,21 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<UserDto>> GetUser(Guid id)
+    {
+        var query = new GetUserQuery(id);
+        
+        var result = await _mediator.Send(query);
+
+        if (result == null)
+        {
+            return NotFound("User does not exist for the given id");
+        }
+        
+        return Ok(result);
+    }
+
     [HttpPost("create")]
     public async Task<ActionResult<CreateUserDto>> CreateUser([FromBody] CreateUserModel user)
     {
@@ -39,8 +54,7 @@ public class UsersController : ControllerBase
         {
             return BadRequest();
         }
-
-        return Ok(result);
-        //return CreatedAtAction("GetUser", new { Id = result. }, result);
+        
+        return CreatedAtAction("GetUser", new { Id = result.Id }, result);
     }
 }

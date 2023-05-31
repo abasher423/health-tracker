@@ -24,6 +24,12 @@ public class UserRepository : IUserRepository
         return _mapper.Map<IEnumerable<UserModel>>(users);
     }
 
+    public async Task<UserModel> GetSingleUser(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        return _mapper.Map<UserModel>(user);
+    }
+
     public async Task<UserModel> CreateUser(CreateUserCommand user, CancellationToken cancellationToken)
     {
         var userToBeAdded = new Domain.Entities.User()

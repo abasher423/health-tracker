@@ -38,12 +38,7 @@ builder.Services.AddAutoMapper(cfg =>
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-// builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(new Assembly[]
-// {
-//     Assembly.GetExecutingAssembly(),
-//     typeof(CreateUserCommand).Assembly,
-//     typeof(CreateUserProfileCommand).Assembly
-// }));
+
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -53,6 +48,7 @@ builder.Services.AddScoped<IRequestHandler<DeleteUserProfileCommand, bool>, Dele
 builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileModel>, UpdateUserProfileCommandHandler>();
 
 builder.Services.AddScoped<IRequestHandler<GetUserProfileQuery, UserProfileModel>, GetUserProfileQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetUserQuery, UserModel>, GetUserQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<ListUserProfilesQuery, IEnumerable<UserProfileModel>>, ListUserProfilesQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<ListUsersQuery, IEnumerable<UserModel>>, ListUsersQueryHandler>();
 
