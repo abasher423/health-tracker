@@ -1,4 +1,5 @@
 using Application.API.V1.User.Commands.Create;
+using Application.API.V1.User.Commands.Update;
 using Application.API.V1.User.Models;
 using Application.API.V1.User.Queries;
 using HealthTracker.DTOs.User;
@@ -56,5 +57,20 @@ public class UsersController : ControllerBase
         }
         
         return CreatedAtAction("GetUser", new { Id = result.Id }, result);
+    }
+
+    [HttpPut("update/{id:guid}")]
+    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserModel user, Guid id)
+    {
+        var command = new UpdateUserCommand(user, id);
+
+        var result = await _mediator.Send(command);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
     }
 }

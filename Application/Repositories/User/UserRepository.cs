@@ -1,4 +1,5 @@
 using Application.API.V1.User.Commands.Create;
+using Application.API.V1.User.Commands.Update;
 using Application.API.V1.User.Models;
 using AutoMapper;
 using Domain.Entities;
@@ -45,5 +46,26 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync(cancellationToken);
 
         return _mapper.Map<UserModel>(userToBeAdded);
+    }
+
+    public async Task<UpdateUserModel> UpdateUser(UpdateUserCommand user, CancellationToken cancellationToken)
+    {
+        // fetch user to be updated
+        var userToUpdate = await _context.Users.FirstOrDefaultAsync(x => x.Id == user.Id, cancellationToken);
+
+        if (userToUpdate == null)
+        {
+            return null;
+        }
+
+        userToUpdate.Email = user.Email ?? userToUpdate.Email;
+        userToUpdate.Password = user.Password ?? userToUpdate.Password;
+        userToUpdate.FirstName = user.FirstName ?? userToUpdate.FirstName;
+        userToUpdate.LastName = user.LastName ?? userToUpdate.LastName;
+        
+        _context.Entry(userToUpdate).State = EntityState.Modified;
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return _mapper.Map<UpdateUserModel>(userToUpdate);
     }
 }

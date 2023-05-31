@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Application.API.V1.User.Commands.Create;
+using Application.API.V1.User.Commands.Update;
 using Application.API.V1.User.Models;
 using Application.API.V1.User.Queries;
 using Application.API.V1.UserProfile.Commands.Create;
@@ -39,14 +40,18 @@ builder.Services.AddAutoMapper(cfg =>
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
+// repositories
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+// commands
 builder.Services.AddScoped<IRequestHandler<CreateUserCommand, UserModel>, CreateUserCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, CreateUserProfileModel>, CreateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteUserProfileCommand, bool>, DeleteUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileModel>, UpdateUserProfileCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateUserCommand, UpdateUserModel>, UpdateUserCommandHandler>();
 
+// queries
 builder.Services.AddScoped<IRequestHandler<GetUserProfileQuery, UserProfileModel>, GetUserProfileQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<GetUserQuery, UserModel>, GetUserQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<ListUserProfilesQuery, IEnumerable<UserProfileModel>>, ListUserProfilesQueryHandler>();
