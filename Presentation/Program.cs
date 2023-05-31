@@ -1,11 +1,12 @@
 ﻿using System.Reflection;
+using Application.API.V1.User.Commands.Create;
+using Application.API.V1.User.Models;
 using Application.API.V1.UserProfile.Commands.Create;
 using Application.API.V1.UserProfile.Commands.Delete;
 using Application.API.V1.UserProfile.Commands.Update;
 using Application.API.V1.UserProfile.Models;
 using Application.API.V1.UserProfile.Queries;
-using Application.API.V1.UserProfile;
-using Application.API.V1.UserProfile.Commands;
+using Application.Repositories.User;
 using Application.Repositories.UserProfile;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
@@ -32,13 +33,20 @@ builder.Services.AddDbContext<HealthTrackerDbContext>(
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddCollectionMappers();
-    cfg.AddMaps(typeof(UserProfileProfile));
+    cfg.AddMaps(typeof(UserProfileProfile), typeof(UserProfile));
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
+// builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(new Assembly[]
+// {
+//     Assembly.GetExecutingAssembly(),
+//     typeof(CreateUserCommand).Assembly,
+//     typeof(CreateUserProfileCommand).Assembly
+// }));
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddScoped<IRequestHandler<CreateUserCommand, UserModel>, CreateUserCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, CreateUserProfileModel>, CreateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteUserProfileCommand, bool>, DeleteUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileModel>, UpdateUserProfileCommandHandler>();

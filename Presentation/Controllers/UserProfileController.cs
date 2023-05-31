@@ -1,14 +1,14 @@
 using Application.API.V1.UserProfile.Commands.Create;
 using Application.API.V1.UserProfile.Commands.Delete;
 using Application.API.V1.UserProfile.Commands.Update;
-using Application.API.V1.UserProfile.Models;
 using Application.API.V1.UserProfile.Queries;
 using HealthTracker.DTOs.UserProfile;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthTracker.Controllers;
-[Route("api/userProfile")]
+
+[Route("api/user-profiles")]
 [ApiController]
 public class UserProfileController : ControllerBase
 {
@@ -47,6 +47,7 @@ public class UserProfileController : ControllerBase
     [HttpPost("create")]
     public async Task<ActionResult<UserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileDto userProfile)
     {
+        //TODO: We might not need to do this
         var command = new CreateUserProfileCommand()
         {
             UserId = userProfile.UserId,

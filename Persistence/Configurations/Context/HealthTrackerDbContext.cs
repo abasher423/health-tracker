@@ -7,6 +7,8 @@ namespace Persistence.Configurations.Context;
 
 public class HealthTrackerDbContext : DbContext
 {
+    public DbSet<User> Users { get; set; }
+
     public DbSet<UserProfile> UserProfiles { get; set; }
     
     public DbSet<HealthMetric> HealthMetrics { get; set; }

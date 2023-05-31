@@ -1,0 +1,36 @@
+using Application.API.V1.User.Commands.Create;
+using Application.API.V1.User.Models;
+using AutoMapper;
+using Domain.Entities;
+using Persistence.Configurations.Context;
+
+namespace Application.Repositories.User;
+
+public class UserRepository : IUserRepository
+{
+    private readonly HealthTrackerDbContext _context;
+    private readonly IMapper _mapper;
+
+    public UserRepository(HealthTrackerDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+    
+    public async Task<UserModel> CreateUser(CreateUserCommand user, CancellationToken cancellationToken)
+    {
+        var userToBeAdded = new Domain.Entities.User()
+        {
+            Id = Guid.NewGuid(),
+            Email = user.Email,
+            Password = user.Password,
+            FirstName = user.FirstName,
+            LastName = user.LastName
+        };
+
+        await _context.Users.AddAsync(userToBeAdded, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return _mapper.Map<UserModel>(userToBeAdded);
+    }
+}
