@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1705.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthTracker.Web", "HealthTracker.Web\HealthTracker.Web.csproj", "{FDC594E4-A314-458F-8C0A-335E6BAFECF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{FDC594E4-A314-458F-8C0A-335E6BAFECF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{82732B2E-CBCB-4462-9137-28EF9E084C74}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{A6611B2B-7681-45BE-91A1-DEED64425179}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{5219FC39-3179-44A2-BDB4-8552AB863C34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{8329D783-C137-47C1-9D7C-DA442FC7AAB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{5219FC39-3179-44A2-BDB4-8552AB863C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5219FC39-3179-44A2-BDB4-8552AB863C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5219FC39-3179-44A2-BDB4-8552AB863C34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8329D783-C137-47C1-9D7C-DA442FC7AAB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8329D783-C137-47C1-9D7C-DA442FC7AAB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8329D783-C137-47C1-9D7C-DA442FC7AAB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8329D783-C137-47C1-9D7C-DA442FC7AAB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

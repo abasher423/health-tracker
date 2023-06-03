@@ -1,6 +1,7 @@
-using Application.API.V1.UserProfiles;
-using Application.API.V1.UserProfiles.Models;
-using Application.API.V1.UserProfiles.Queries;
+using Application.API.V1.UserProfile.Models;
+using Application.API.V1.UserProfile.Queries;
+using Application.API.V1.UserProfile;
+using Application.Repositories.UserProfile;
 using Common.Enums;
 using Moq;
 
@@ -51,7 +52,7 @@ public class GetUserProfileQueryHandlerTests
         var query = new GetUserProfileQuery(id);
         var handler = new GetUserProfileQueryHandler(_userProfileRepositoryMock.Object);
         
-        var userProfile = new UserProfileDto()
+        var userProfile = new UserProfileModel()
         {
             Id = id,
             Age = 27,

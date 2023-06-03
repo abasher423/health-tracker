@@ -1,4 +1,4 @@
-using Application.API.V1.UserProfiles.Commands.Create;
+using Application.API.V1.UserProfile.Commands.Create;
 using Common.Enums;
 
 namespace Tests.Application.API.UserProfile.Commands.Create;

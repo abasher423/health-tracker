@@ -1,6 +1,7 @@
-using Application.API.V1.UserProfiles;
-using Application.API.V1.UserProfiles.Commands.Create;
-using Application.API.V1.UserProfiles.Models;
+using Application.API.V1.UserProfile.Commands.Create;
+using Application.API.V1.UserProfile.Models;
+using Application.API.V1.UserProfile;
+using Application.Repositories.UserProfile;
 using Common.Enums;
 using Moq;
 
@@ -43,7 +44,7 @@ public class CreateUserProfileCommandHandlerTests
             Weight = 128
         };
 
-        var createUserProfileDto = new CreateUserProfileDto()
+        var createUserProfileDto = new CreateUserProfileModel()
         {
             Id = new Guid(),
             Age = 27,
