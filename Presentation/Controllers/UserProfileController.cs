@@ -1,6 +1,7 @@
 using Application.API.V1.UserProfile.Commands.Create;
 using Application.API.V1.UserProfile.Commands.Delete;
 using Application.API.V1.UserProfile.Commands.Update;
+using Application.API.V1.UserProfile.Models;
 using Application.API.V1.UserProfile.Queries;
 using HealthTracker.DTOs.UserProfile;
 using MediatR;
@@ -68,17 +69,9 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpPut("update/{id:guid}")]
-    public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileDto userProfile, Guid id)
+    public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileModel userProfile, Guid id)
     {
-        var command = new UpdateUserProfileCommand()
-        {
-            Id = id,
-            UserId = userProfile.UserId,
-            Age = userProfile.Age,
-            Gender = userProfile.Gender,
-            Height = userProfile.Height,
-            Weight = userProfile.Weight
-        };
+        var command = new UpdateUserProfileCommand(userProfile, id);
 
         var result = await _mediator.Send(command);
 

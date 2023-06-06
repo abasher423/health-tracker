@@ -36,7 +36,7 @@ builder.Services.AddDbContext<HealthTrackerDbContext>(
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddCollectionMappers();
-    cfg.AddMaps(typeof(UserProfileProfile), typeof(UserProfile));
+    cfg.AddMaps(typeof(UserProfileMappingProfile), typeof(UserMappingProfile));
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

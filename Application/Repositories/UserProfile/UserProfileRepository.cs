@@ -45,7 +45,7 @@ public class UserProfileRepository : IUserProfileRepository
         await _context.UserProfiles.AddAsync(userProfileToBeAdded, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         
-        return _mapper.Map<CreateUserProfileModel>(userProfile);
+        return _mapper.Map<CreateUserProfileModel>(userProfileToBeAdded);
     }
 
     public async Task<UpdateUserProfileModel> UpdateUserProfile(UpdateUserProfileCommand userProfile, CancellationToken cancellationToken)
@@ -56,12 +56,11 @@ public class UserProfileRepository : IUserProfileRepository
         {
             return null;
         }
-
-        userProfileToUpdate.UserId = userProfile.UserId;
-        userProfileToUpdate.Gender = userProfile.Gender;
-        userProfileToUpdate.Age = userProfile.Age;
-        userProfileToUpdate.Height = userProfile.Height;
-        userProfileToUpdate.Weight = userProfile.Weight;
+        
+        userProfileToUpdate.Gender = userProfile.Gender != null ? userProfile.Gender : userProfileToUpdate.Gender;
+        userProfileToUpdate.Age = userProfile.Age != null ? userProfile.Age : userProfileToUpdate.Age;
+        userProfileToUpdate.Height = userProfile.Height != null ? userProfile.Height : userProfileToUpdate.Height;
+        userProfileToUpdate.Weight = userProfile.Weight != null ? userProfile.Weight : userProfileToUpdate.Weight;
 
         _context.Entry(userProfileToUpdate).State = EntityState.Modified;
         await _context.SaveChangesAsync(cancellationToken);

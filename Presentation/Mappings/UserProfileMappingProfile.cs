@@ -1,25 +1,18 @@
-using Application.API.V1.UserProfile.Commands.Create;
 using Application.API.V1.UserProfile.Commands.Update;
 using Application.API.V1.UserProfile.Models;
 using AutoMapper;
 using Domain.Entities;
-using HealthTracker.DTOs.UserProfile;
 
 namespace HealthTracker.Mappings;
 
-public class UserProfileProfile : Profile
+public class UserProfileMappingProfile : Profile
 {
-    public UserProfileProfile()
+    public UserProfileMappingProfile()
     {
         CreateMap<UserProfile, UserProfileModel>().ReverseMap();
         CreateMap<UserProfile, CreateUserProfileModel>().ReverseMap();
         CreateMap<UserProfile, UpdateUserProfileModel>().ReverseMap();
-
-        CreateMap<CreateUserProfileCommand, CreateUserProfileModel>().ReverseMap();
+        
         CreateMap<UpdateUserProfileCommand, UpdateUserProfileModel>().ReverseMap();
-
-        CreateMap<UserProfileModel, UserProfileDto>().ReverseMap();
-        CreateMap<CreateUserProfileModel, CreateUserProfileDto>().ReverseMap();
-        CreateMap<UpdateUserProfileModel, UpdateUserProfileDto>().ReverseMap();
     }
 }
