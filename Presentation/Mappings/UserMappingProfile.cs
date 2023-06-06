@@ -4,9 +4,9 @@ using Domain.Entities;
 
 namespace HealthTracker.Mappings;
 
-public class UserProfile : Profile
+public class UserMappingProfile : Profile
 {
-    public UserProfile()
+    public UserMappingProfile()
     {
         CreateMap<User, UserModel>();
         CreateMap<User, UpdateUserModel>();
