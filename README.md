@@ -52,3 +52,30 @@ Analytics should include metrics like BMI, body fat percentage, ideal weight ran
 The following diagram is an ERD (Entity-Relationship Diagram) which is a visual representation of the entities within the system and the relationships between them.
 
 ![Model databases](https://github.com/abasher423/health-tracker-app/assets/56160528/da356aa8-e907-41f7-b2f4-d3625570e279)
+
+
+## Security
+
+I have decided to use RS and here is my thought process:
+
+1. HS256 (HMAC-SHA256): HS256 uses a symmetric key to both sign and verify the token. This means that the same secret key is used for both token creation and validation. HS256 can provide a good level of security if you can securely manage and protect the secret key. It is relatively simple to implement and performant.
+2. SHA256: SHA256 is a cryptographic hash function, not a signing algorithm. It is commonly used in combination with other algorithms, such as RSA or ECDSA. If you are considering SHA256 alone, it may not be sufficient for token validation, as it does not provide a built-in mechanism for signing or verifying tokens.
+3. RS256 (RSA with SHA-256): RS256 is an asymmetric algorithm that uses a public-private key pair. The token issuer signs the token with the private key, and the receiver validates the signature using the corresponding public key. RS256 provides strong security and is widely used for token-based authentication. However, it requires the management of key pairs and the public key infrastructure (PKI).
+
+Considering the nature of a health tracker application, which may involve sensitive personal health information, it is generally recommended to use RS256. This algorithm offers robust security by utilizing asymmetric cryptography and provides a higher level of trust and assurance.
+Implementing RS256 may require additional setup and management of keys, but it offers greater security benefits, especially when dealing with sensitive user data. However, the final decision should be based on your specific needs, the level of security required, and the resources available for key management.
+
+### Authentication
+To authenticate users in HealthTracker, I chose to implement JSON Web Token (JWT) authentication. This approach offers several benefits, including stateless authentication, scalability, and flexibility. Here's how I implemented JWT authentication:
+
+1. Login Endpoint: I created an API endpoint that accepts login credentials (such as email and password) from the user.
+User Validation: After receiving the login credentials, I validated them against the user repository to ensure the user exists and the provided information is correct.
+2. JWT Generation: Once the user credentials are validated, I generate a JWT using a secure token provider. This JWT serves as a digital identity token for the authenticated user.
+3. Token Return: The generated JWT is returned to the client, allowing them to include it in subsequent API requests for authentication.
+4. By implementing JWT authentication, HealthTracker ensures secure and efficient user authentication without the need for server-side sessions. This approach provides an added layer of protection for the sensitive data handled by the application.
+
+### Secure API Requests
+To ensure that only authenticated users can access certain API endpoints and protect sensitive data, I utilized the [Authorize] attribute in my API endpoints. By applying this attribute, only users with valid JWT tokens can access the protected routes. This helps maintain the confidentiality and integrity of the data exchanged between the client and the server.
+
+Overall, the implementation of security and authentication measures in HealthTracker reflects my commitment to safeguarding user information and maintaining a secure environment for handling sensitive health data.
+
