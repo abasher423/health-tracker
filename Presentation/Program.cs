@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using Application.Abstractions;
+using Application.API.V1.Login.Commands;
 using Application.API.V1.User.Commands.Create;
 using Application.API.V1.User.Commands.Delete;
 using Application.API.V1.User.Commands.Update;
@@ -16,7 +18,10 @@ using Persistence.Configurations.Context;
 using AutoMapper.EquivalencyExpression;
 using FluentValidation;
 using HealthTracker.Mappings;
+using HealthTracker.OptionsSetup;
+using Infrastructure.Authentication;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,6 +51,7 @@ builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // commands
+builder.Services.AddScoped<IRequestHandler<LoginCommand, string>, LoginCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateUserCommand, UserModel>, CreateUserCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, CreateUserProfileModel>, CreateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileModel>, UpdateUserProfileCommandHandler>();
@@ -61,6 +67,24 @@ builder.Services.AddScoped<IRequestHandler<ListUsersQuery, IEnumerable<UserModel
 
 builder.Services.AddScoped<IValidator<CreateUserProfileCommand>, CreateUserProfileCommandValidator>();
 
+// Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
+builder.Services.Configure<JwtOptions>(options =>
+{
+    options.Issuer = jwtOptions.Issuer;
+    options.Audience = jwtOptions.Audience;
+    options.SecretKey = jwtOptions.SecretKey;
+});
+
+
+// when IOptions of JwtOptions is injected, it will trigger the configure method
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -71,6 +95,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -1,3 +1,5 @@
+using Application.API.V1.Login.Commands;
+using Application.API.V1.Login.Models;
 using Application.API.V1.User.Commands.Create;
 using Application.API.V1.User.Commands.Delete;
 using Application.API.V1.User.Commands.Update;
@@ -5,6 +7,7 @@ using Application.API.V1.User.Models;
 using Application.API.V1.User.Queries;
 using HealthTracker.DTOs.User;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthTracker.Controllers;
@@ -30,6 +33,7 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize] // require anyone that is hitting this endpoint to be authenticated using a jwt
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<UserDto>> GetUser(Guid id)
     {
@@ -58,6 +62,21 @@ public class UsersController : ControllerBase
         }
         
         return CreatedAtAction("GetUser", new { Id = result.Id }, result);
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> LoginUser([FromBody] LoginModel loginModel, CancellationToken cancellationToken)
+    {
+        var command = new LoginCommand(loginModel.Email);
+
+        var tokenResult = await _mediator.Send(command, cancellationToken);
+
+        if (tokenResult == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(tokenResult);
     }
 
     [HttpPut("update/{id:guid}")]

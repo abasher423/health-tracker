@@ -31,6 +31,12 @@ public class UserRepository : IUserRepository
         return _mapper.Map<UserModel>(user);
     }
 
+    public async Task<UserModel> GetByEmail(string email, CancellationToken cancellationToken)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+        return _mapper.Map<UserModel>(user);
+    }
+
     public async Task<UserModel> CreateUser(CreateUserCommand user, CancellationToken cancellationToken)
     {
         var userToBeAdded = new Domain.Entities.User()
