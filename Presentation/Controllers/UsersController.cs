@@ -1,6 +1,5 @@
 using Application.API.V1.Login.Commands;
 using Application.API.V1.Login.Models;
-using Application.API.V1.User.Commands.Create;
 using Application.API.V1.User.Commands.Delete;
 using Application.API.V1.User.Commands.Update;
 using Application.API.V1.User.Models;
@@ -48,52 +47,7 @@ public class UsersController : ControllerBase
         
         return Ok(result);
     }
-
-    [HttpPost("create")]
-    public async Task<ActionResult<CreateUserDto>> CreateUser([FromBody] CreateUserModel user)
-    {
-        var command = new CreateUserCommand(user);
-
-        var result = await _mediator.Send(command);
-
-        if (result == null)
-        {
-            return BadRequest();
-        }
-        
-        return CreatedAtAction("GetUser", new { Id = result.Id }, result);
-    }
-
-    [HttpPost("login")]
-    public async Task<IActionResult> LoginUser([FromBody] LoginModel loginModel, CancellationToken cancellationToken)
-    {
-        var command = new LoginCommand(loginModel.Email);
-
-        var tokenResult = await _mediator.Send(command, cancellationToken);
-
-        if (tokenResult == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(tokenResult);
-    }
-
-    [HttpPut("update/{id:guid}")]
-    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserModel user, Guid id)
-    {
-        var command = new UpdateUserCommand(user, id);
-
-        var result = await _mediator.Send(command);
-
-        if (result == null)
-        {
-            return NotFound();
-        }
-
-        return NoContent();
-    }
-
+    
     [HttpDelete("delete/{id:guid}")]
     public async Task<IActionResult> DeleteUser(Guid id)
     {

@@ -9,13 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthTracker.Controllers;
 
-[Route("api/user-profiles")]
+[Route("api/profiles")]
 [ApiController]
-public class UserProfileController : ControllerBase
+public class ProfilesController : ControllerBase
 {
     private readonly IMediator _mediator;
     
-    public UserProfileController(IMediator mediator)
+    public ProfilesController(IMediator mediator)
     {
         _mediator = mediator;
     }
