@@ -1,4 +1,3 @@
-using Application.API.V1.User.Commands.Create;
 using Application.API.V1.User.Commands.Update;
 using Application.API.V1.User.Models;
 using AutoMapper;
@@ -37,13 +36,13 @@ public class UserRepository : IUserRepository
         return _mapper.Map<UserModel>(user);
     }
 
-    public async Task<UserModel> CreateUser(CreateUserCommand user, CancellationToken cancellationToken)
+    public async Task<UserModel> CreateUser(UserModel user, CancellationToken cancellationToken)
     {
         var userToBeAdded = new Domain.Entities.User()
         {
             Id = Guid.NewGuid(),
             Email = user.Email,
-            Password = user.Password,
+            HashedPassword = user.HashedPassword,
             FirstName = user.FirstName,
             LastName = user.LastName
         };
@@ -65,7 +64,7 @@ public class UserRepository : IUserRepository
         }
 
         userToUpdate.Email = user.Email ?? userToUpdate.Email;
-        userToUpdate.Password = user.Password ?? userToUpdate.Password;
+        userToUpdate.HashedPassword = user.Password ?? userToUpdate.HashedPassword;
         userToUpdate.FirstName = user.FirstName ?? userToUpdate.FirstName;
         userToUpdate.LastName = user.LastName ?? userToUpdate.LastName;
         
