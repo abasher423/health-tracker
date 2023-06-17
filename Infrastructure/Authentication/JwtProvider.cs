@@ -30,7 +30,7 @@ public sealed class JwtProvider : IJwtProvider
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_options.SecretKey)),
-            SecurityAlgorithms.RsaSha256);
+            SecurityAlgorithms.HmacSha256);
         
         // generate token
         var token = new JwtSecurityToken(
