@@ -1,37 +1,28 @@
-using Application.Abstractions;
-using Application.Repositories.User;
+using Application.API.V1.Login.Models;
+using Application.Services.Interfaces;
+using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace Application.API.V1.Login.Commands;
 
-public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, string>
+public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, LoginModel>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IJwtProvider _jwtProvider;
+    private readonly IAccountService _accountService;
+    private readonly IMapper _mapper;
 
-    public LoginCommandHandler(IUserRepository userRepository, IJwtProvider jwtProvider)
+    public LoginCommandHandler( IAccountService accountService, IMapper mapper)
     {
-        _userRepository = userRepository;
-        _jwtProvider = jwtProvider;
+        _accountService = accountService;
+        _mapper = mapper;
     }
 
-    public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<LoginModel> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        // Email.Create(request.email)
-        
-        var user  = await _userRepository.GetByEmail(request.Email, cancellationToken);
-
-        if (user == null)
+        if (request == null)
         {
             return null;
         }
-        
-        // also check for password
 
-        string token = _jwtProvider.Generate(user);
-
-        return token;
-
+        return await _accountService.Login(_mapper.Map<LoginRequest>(request), cancellationToken);
     }
 }
