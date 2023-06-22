@@ -1,3 +1,4 @@
+using Application.Abstractions.Services;
 using Application.API.V1.User.Models;
 using MediatR;
 
@@ -5,14 +6,14 @@ namespace Application.API.V1.User.Queries;
 
 public class ListUsersQueryHandler : IRequestHandler<ListUsersQuery, IEnumerable<UserModel>>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUserService _userService;
 
-    public ListUsersQueryHandler(IUserRepository userRepository)
+    public ListUsersQueryHandler(IUserService userService)
     {
-        _userRepository = userRepository;
+        _userService = userService;
     }
     public async Task<IEnumerable<UserModel>> Handle(ListUsersQuery request, CancellationToken cancellationToken)
     {
-        return await _userRepository.GetUsers(cancellationToken);
+        return await _userService.GetAllUsers(cancellationToken);
     }
 }
