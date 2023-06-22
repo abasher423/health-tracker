@@ -1,20 +1,20 @@
+using Application.Abstractions;
 using Application.API.V1.UserProfile.Models;
-using Application.Repositories.UserProfile;
 using MediatR;
 
 namespace Application.API.V1.UserProfile.Queries;
 
 public class ListUserProfilesQueryHandler : IRequestHandler<ListUserProfilesQuery, IEnumerable<UserProfileModel>>
 {
-    private readonly IUserProfileRepository _userProfileRepository;
+    private readonly IProfileService _profileService;
 
-    public ListUserProfilesQueryHandler(IUserProfileRepository userProfileRepository)
+    public ListUserProfilesQueryHandler(IProfileService profileService)
     {
-        _userProfileRepository = userProfileRepository;
+        _profileService = profileService;
     }
     
     public async Task<IEnumerable<UserProfileModel>> Handle(ListUserProfilesQuery request, CancellationToken cancellationToken)
     {
-        return await _userProfileRepository.GetAllUserProfiles(cancellationToken);
+        return await _profileService.GetProfiles(cancellationToken);
     }
 }

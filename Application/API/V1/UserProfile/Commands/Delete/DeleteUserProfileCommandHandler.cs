@@ -1,15 +1,15 @@
-using Application.Repositories.UserProfile;
+using Application.Abstractions;
 using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Delete;
 
 public class DeleteUserProfileCommandHandler : IRequestHandler<DeleteUserProfileCommand, bool>
 {
-    private readonly IUserProfileRepository _userProfileRepository;
+    private readonly IProfileService _profileService;
 
-    public DeleteUserProfileCommandHandler(IUserProfileRepository userProfileRepository)
+    public DeleteUserProfileCommandHandler(IProfileService profileService)
     {
-        _userProfileRepository = userProfileRepository;
+        _profileService = profileService;
     }
     
     public async Task<bool> Handle(DeleteUserProfileCommand request, CancellationToken cancellationToken)
@@ -19,6 +19,6 @@ public class DeleteUserProfileCommandHandler : IRequestHandler<DeleteUserProfile
             throw new ArgumentNullException();
         }
         
-        return  await _userProfileRepository.DeleteUserProfile(request.Id, cancellationToken);
+        return  await _profileService.DeleteProfile(request.Id, cancellationToken);
     }
 }

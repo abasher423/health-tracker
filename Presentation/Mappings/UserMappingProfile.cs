@@ -8,7 +8,6 @@ public class UserMappingProfile : Profile
 {
     public UserMappingProfile()
     {
-        CreateMap<User, UserModel>();
-        CreateMap<User, UpdateUserModel>();
+        
     }
 }

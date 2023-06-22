@@ -46,17 +46,9 @@ public class ProfilesController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<UserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileDto userProfile)
+    public async Task<ActionResult<UserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileModel userProfile)
     {
-        //TODO: We might not need to do this
-        var command = new CreateUserProfileCommand()
-        {
-            UserId = userProfile.UserId,
-            Age = userProfile.Age,
-            Gender = userProfile.Gender,
-            Height = userProfile.Height,
-            Weight = userProfile.Weight
-        };
+        var command = new CreateUserProfileCommand(userProfile);
 
         var result = await _mediator.Send(command);
 
@@ -87,6 +79,7 @@ public class ProfilesController : ControllerBase
     public async Task<IActionResult> DeleteUserProfile(Guid id)
     {
         var userProfile = new DeleteUserProfileCommand(id);
+        
         var result = await _mediator.Send(userProfile);
 
         if (!result)

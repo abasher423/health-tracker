@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Update;
 
-public class UpdateUserProfileCommand : IRequest<UpdateUserProfileModel>
+public class UpdateUserProfileCommand : IRequest<UserProfileModel>
 {
     public Guid Id { get; set; }
     public int Age { get; set; }

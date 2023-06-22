@@ -2,23 +2,25 @@ using Application.Abstractions;
 using Application.API.V1.Login.Models;
 using Application.API.V1.Register.Models;
 using Application.API.V1.User.Models;
-using Application.Repositories.User;
-using Application.Services.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Persistence.Repositories.Users;
 
-namespace Application.Services.Implementations;
+namespace Application.Services;
 
 public class AccountService : IAccountService
 {
+    private readonly IMapper _mapper;
     private readonly IJwtProvider _jwtProvider;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserRepository _userRepository;
 
-    public AccountService(IJwtProvider jwtProvider, IPasswordHasher passwordHasher, IUserRepository userRepository)
+    public AccountService(IJwtProvider jwtProvider, IPasswordHasher passwordHasher, IUserRepository userRepository, IMapper mapper)
     {
         _jwtProvider = jwtProvider;
         _passwordHasher = passwordHasher;
         _userRepository = userRepository;
+        _mapper = mapper;
     }
 
     public async Task<LoginModel> Login(LoginRequest loginRequest, CancellationToken cancellationToken)
@@ -34,7 +36,7 @@ public class AccountService : IAccountService
         }
         
         // Generate jwt
-        var token = _jwtProvider.Generate(user);
+        var token = _jwtProvider.Generate(_mapper.Map<UserModel>(user));
 
         return new LoginModel()
         {
@@ -46,7 +48,7 @@ public class AccountService : IAccountService
 
     public async Task<RegisterModel> Register(RegisterRequest user, CancellationToken cancellationToken)
     {
-        var userToBeCreated = new UserModel()
+        var userToBeCreated = new User()
         {
             Email = user.Email,
             HashedPassword = _passwordHasher.Hash(user.Password),
@@ -56,7 +58,7 @@ public class AccountService : IAccountService
 
         var userCreated = await _userRepository.CreateUser(userToBeCreated, cancellationToken);
 
-        var token = _jwtProvider.Generate(userCreated);
+        var token = _jwtProvider.Generate(_mapper.Map<UserModel>(userCreated));
 
         return new RegisterModel()
         {

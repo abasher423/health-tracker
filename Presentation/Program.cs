@@ -13,10 +13,7 @@ using Application.API.V1.UserProfile.Commands.Delete;
 using Application.API.V1.UserProfile.Commands.Update;
 using Application.API.V1.UserProfile.Models;
 using Application.API.V1.UserProfile.Queries;
-using Application.Repositories.User;
-using Application.Repositories.UserProfile;
-using Application.Services.Implementations;
-using Application.Services.Interfaces;
+using Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
 using AutoMapper.EquivalencyExpression;
@@ -27,6 +24,8 @@ using Infrastructure;
 using Infrastructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Persistence.Repositories.UserProfiles;
+using Persistence.Repositories.Users;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,8 +60,8 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 // commands
 builder.Services.AddScoped<IRequestHandler<LoginCommand, LoginModel>, LoginCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<RegisterCommand, RegisterModel>, RegisterCommandHandler>();
-builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, CreateUserProfileModel>, CreateUserProfileCommandHandler>();
-builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileModel>, UpdateUserProfileCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, UserProfileModel>, CreateUserProfileCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UserProfileModel>, UpdateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserCommand, UpdateUserModel>, UpdateUserCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteUserProfileCommand, bool>, DeleteUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();

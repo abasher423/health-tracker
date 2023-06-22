@@ -1,26 +1,31 @@
+using Application.Abstractions;
 using Application.API.V1.UserProfile.Models;
-using Application.Repositories.UserProfile;
+using AutoMapper;
 using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Update;
 
-public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, UpdateUserProfileModel>
+public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, UserProfileModel>
 {
-    private readonly IUserProfileRepository _userProfileRepository;
+    private readonly IMapper _mapper;
+    private readonly IProfileService _profileService;
 
-    public UpdateUserProfileCommandHandler(IUserProfileRepository userProfileRepository)
+    public UpdateUserProfileCommandHandler(IProfileService profileService, IMapper mapper)
     {
-        _userProfileRepository = userProfileRepository;
+        _profileService = profileService;
+        _mapper = mapper;
     }
     
-    public async Task<UpdateUserProfileModel> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
+    public async Task<UserProfileModel> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
     {
         if (request == null)
         {
             throw new ArgumentNullException();
         }
+
+        var mappedProfile = _mapper.Map<UserProfileModel>(request);
         
-        var updatedUserProfile = await _userProfileRepository.UpdateUserProfile(request, cancellationToken);
+        var updatedUserProfile = await _profileService.UpdateProfile(mappedProfile, cancellationToken);
 
         return updatedUserProfile;
     }
