@@ -1,5 +1,5 @@
+using Application.Abstractions;
 using Application.API.V1.Register.Models;
-using Application.Services.Interfaces;
 using AutoMapper;
 using MediatR;
 

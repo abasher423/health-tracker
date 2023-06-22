@@ -1,4 +1,3 @@
-using Application.Repositories.User;
 using MediatR;
 
 namespace Application.API.V1.User.Commands.Delete;
