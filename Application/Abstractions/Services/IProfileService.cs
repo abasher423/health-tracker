@@ -1,7 +1,7 @@
 
 using Application.API.V1.UserProfile.Models;
 
-namespace Application.Abstractions;
+namespace Application.Abstractions.Services;
 
 public interface IProfileService
 {

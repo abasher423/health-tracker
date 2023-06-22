@@ -1,7 +1,7 @@
 using Application.API.V1.Login.Models;
 using Application.API.V1.Register.Models;
 
-namespace Application.Abstractions;
+namespace Application.Abstractions.Services;
 
 public interface IAccountService
 {

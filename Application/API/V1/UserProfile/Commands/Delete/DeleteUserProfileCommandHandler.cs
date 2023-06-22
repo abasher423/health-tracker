@@ -1,4 +1,5 @@
 using Application.Abstractions;
+using Application.Abstractions.Services;
 using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Delete;

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Application.Abstractions;
+using Application.Abstractions.Services;
 using Application.API.V1.Login.Commands;
 using Application.API.V1.Login.Models;
 using Application.API.V1.Register.Commands;
