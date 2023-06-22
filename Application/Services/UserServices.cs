@@ -29,4 +29,19 @@ public class UserServices : IUserService
         var user =  await _userRepository.GetSingleUser(id, cancellationToken);
         return _mapper.Map<UserModel>(user);
     }
+
+    public async Task<UserModel> UpdateUser(UserModel user, CancellationToken cancellationToken)
+    {
+        var updatedUser = await _userRepository.UpdateUser(_mapper.Map<User>(user), cancellationToken);
+
+        if (updatedUser == null)
+            return null;
+
+        return user;
+    }
+
+    public async Task<bool> DeleteUser(Guid id, CancellationToken cancellationToken)
+    {
+        return await _userRepository.DeleteUser(id, cancellationToken);
+    }
 }

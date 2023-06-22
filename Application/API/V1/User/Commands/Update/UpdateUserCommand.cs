@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.API.V1.User.Commands.Update;
 
-public class UpdateUserCommand : IRequest<UpdateUserModel>
+public class UpdateUserCommand : IRequest<UserModel>
 {
     public Guid Id { get; set; }
     public string Email { get; set; }

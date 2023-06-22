@@ -63,7 +63,7 @@ builder.Services.AddScoped<IRequestHandler<LoginCommand, LoginModel>, LoginComma
 builder.Services.AddScoped<IRequestHandler<RegisterCommand, RegisterModel>, RegisterCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, UserProfileModel>, CreateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UserProfileModel>, UpdateUserProfileCommandHandler>();
-builder.Services.AddScoped<IRequestHandler<UpdateUserCommand, UpdateUserModel>, UpdateUserCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateUserCommand, UserModel>, UpdateUserCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteUserProfileCommand, bool>, DeleteUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
 

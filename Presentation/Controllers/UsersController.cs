@@ -47,6 +47,21 @@ public class UsersController : ControllerBase
         
         return Ok(result);
     }
+
+    [HttpPut("update/{id:guid}")]
+    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserModel user, Guid id)
+    {
+        var command = new UpdateUserCommand(user, id);
+
+        var result = await _mediator.Send(command);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
     
     [HttpDelete("delete/{id:guid}")]
     public async Task<IActionResult> DeleteUser(Guid id)
