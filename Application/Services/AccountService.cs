@@ -27,6 +27,9 @@ public class AccountService : IAccountService
     public async Task<LoginModel> Login(LoginRequest loginRequest, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByEmail(loginRequest.Email, cancellationToken);
+
+        if (user == null)
+            return null;
         
         // Verify hashed passwords
         var result = _passwordHasher.Verify(user.HashedPassword, loginRequest.Password);

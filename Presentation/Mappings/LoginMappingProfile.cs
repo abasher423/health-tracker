@@ -11,6 +11,10 @@ public class LoginMappingProfile : Profile
 {
     public LoginMappingProfile()
     {
-        
+        CreateMap<LoginCommand, LoginRequest>().ReverseMap();
+        CreateMap<RegisterCommand, RegisterRequest>().ReverseMap();
+
+        CreateMap<RegisterModel, LoginDto>().ReverseMap();
+        CreateMap<LoginModel, LoginDto>().ReverseMap();
     }
 }
