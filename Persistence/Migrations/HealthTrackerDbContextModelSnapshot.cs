@@ -174,6 +174,11 @@ namespace Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("first_name");
 
+                    b.Property<string>("HashedPassword")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text")
@@ -181,11 +186,6 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("password");
 
                     b.HasKey("Id")
                         .HasName("pk_user_id");

@@ -1,16 +1,16 @@
+using Application.Abstractions.Services;
 using Application.API.V1.User.Models;
-using Application.Repositories.User;
 using MediatR;
 
 namespace Application.API.V1.User.Queries;
 
 public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserModel>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUserService _userService;
 
-    public GetUserQueryHandler(IUserRepository userRepository)
+    public GetUserQueryHandler(IUserService userService)
     {
-        _userRepository = userRepository;
+        _userService = userService;
     }
     public async Task<UserModel> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
@@ -19,6 +19,6 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserModel>
             return null;
         }
 
-        return await _userRepository.GetSingleUser(request.Id, cancellationToken);
+        return await _userService.GetSingleUser(request.Id, cancellationToken);
     }
 }

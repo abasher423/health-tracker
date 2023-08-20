@@ -1,15 +1,15 @@
-using Application.Repositories.User;
+using Application.Abstractions.Services;
 using MediatR;
 
 namespace Application.API.V1.User.Commands.Delete;
 
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, bool>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUserService _userService;
 
-    public DeleteUserCommandHandler(IUserRepository userRepository)
+    public DeleteUserCommandHandler(IUserService userService)
     {
-        _userRepository = userRepository;
+        _userService = userService;
     }
     
     public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
@@ -19,6 +19,6 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, bool>
             return false;
         }
 
-        return await _userRepository.DeleteUser(request.Id, cancellationToken);
+        return await _userService.DeleteUser(request.Id, cancellationToken);
     }
 }

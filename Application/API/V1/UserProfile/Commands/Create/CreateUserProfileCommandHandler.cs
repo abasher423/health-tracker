@@ -1,25 +1,32 @@
+using Application.Abstractions;
+using Application.Abstractions.Services;
 using Application.API.V1.UserProfile.Models;
-using Application.Repositories.UserProfile;
+using AutoMapper;
 using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Create;
 
-public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfileCommand, CreateUserProfileModel>
-{
+public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfileCommand, UserProfileModel>
+{ 
     // we will use a repository for data access so we can unit test better
-    private readonly IUserProfileRepository _userProfileRepository;
-    public CreateUserProfileCommandHandler(IUserProfileRepository userProfileRepository)
+    private readonly IProfileService _profileService;
+    private readonly IMapper _mapper;
+    
+    public CreateUserProfileCommandHandler(IProfileService profileService, IMapper mapper)
     {
-        _userProfileRepository = userProfileRepository;
+        _profileService = profileService;
+        _mapper = mapper;
     }
 
-    public async Task<CreateUserProfileModel> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
+    public async Task<UserProfileModel> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
     {
         if (request == null)
         {
             throw new ArgumentNullException();
         }
 
-        return await _userProfileRepository.CreateUserProfile(request, cancellationToken);
+        var profile = _mapper.Map<UserProfileModel>(request);
+
+        return await _profileService.CreateProfile(profile, cancellationToken);
     }
 }

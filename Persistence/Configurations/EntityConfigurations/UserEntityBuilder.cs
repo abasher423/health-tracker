@@ -13,7 +13,7 @@ public class UserEntityBuilder : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.Id).IsRequired().HasColumnName("id");
         builder.Property(x => x.Email).IsRequired().HasColumnName("email");
-        builder.Property(x => x.Password).IsRequired().HasColumnName("password");
+        builder.Property(x => x.HashedPassword).IsRequired().HasColumnName("password");
         builder.Property(x => x.FirstName).IsRequired().HasColumnName("first_name");
         builder.Property(x => x.LastName).IsRequired().HasColumnName("last_name");
         
