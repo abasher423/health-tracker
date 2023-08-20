@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Text;
 using Application.Abstractions;
 using Application.Abstractions.Services;
 using Application.API.V1.Login.Commands;
@@ -25,6 +26,7 @@ using Infrastructure;
 using Infrastructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Persistence.Repositories.UserProfiles;
 using Persistence.Repositories.Users;
 
@@ -57,6 +59,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // services
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserServices>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 // commands
 builder.Services.AddScoped<IRequestHandler<LoginCommand, LoginModel>, LoginCommandHandler>();
@@ -75,10 +79,6 @@ builder.Services.AddScoped<IRequestHandler<ListUsersQuery, IEnumerable<UserModel
 
 builder.Services.AddScoped<IValidator<CreateUserProfileCommand>, CreateUserProfileCommandValidator>();
 
-// Authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer();
-
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
@@ -90,10 +90,36 @@ builder.Services.Configure<JwtOptions>(options =>
     options.SecretKey = jwtOptions.SecretKey;
 });
 
+// JwtBearerOptionsSetup doesn't currently work (Investigate later)
+// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer();
 
 // when IOptions of JwtOptions is injected, it will trigger the configure method
 builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
+
+ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+     .AddJwtBearer(cfg =>
+     {
+         cfg.RequireHttpsMetadata = true;
+         var key = Encoding.UTF8.GetBytes(jwtOptions.SecretKey);
+         cfg.TokenValidationParameters = new TokenValidationParameters
+         {
+             ValidateIssuer = true,
+             ValidateAudience = true,
+             ValidateLifetime = true,
+             ValidIssuer = jwtOptions.Issuer,
+             ValidAudience = jwtOptions.Audience,
+             ValidateIssuerSigningKey = true,
+             ClockSkew = TimeSpan.Zero,
+             IssuerSigningKey = new SymmetricSecurityKey(key)
+         };
+         cfg.SaveToken = true;
+         
+     });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -105,6 +131,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Use CORS
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+});
 
 app.UseAuthentication();
 
