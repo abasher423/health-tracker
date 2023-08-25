@@ -15,6 +15,7 @@ using Application.API.V1.UserProfile.Commands.Delete;
 using Application.API.V1.UserProfile.Commands.Update;
 using Application.API.V1.UserProfile.Models;
 using Application.API.V1.UserProfile.Queries;
+using Application.API.V1.Verification.Commands;
 using Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
@@ -24,9 +25,11 @@ using HealthTracker.Mappings;
 using HealthTracker.OptionsSetup;
 using Infrastructure;
 using Infrastructure.Authentication;
+using Infrastructure.EmailVerification;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Persistence;
 using Persistence.Repositories.UserProfiles;
 using Persistence.Repositories.Users;
 
@@ -59,12 +62,15 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // services
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserService, UserServices>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 
 // commands
 builder.Services.AddScoped<IRequestHandler<LoginCommand, LoginModel>, LoginCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<RegisterCommand, RegisterModel>, RegisterCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<VerifyEmailCommand, bool>, VerifyEmailCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateUserProfileCommand, UserProfileModel>, CreateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserProfileCommand, UserProfileModel>, UpdateUserProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateUserCommand, UserModel>, UpdateUserCommandHandler>();
@@ -80,7 +86,9 @@ builder.Services.AddScoped<IRequestHandler<ListUsersQuery, IEnumerable<UserModel
 builder.Services.AddScoped<IValidator<CreateUserProfileCommand>, CreateUserProfileCommandValidator>();
 
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<IEmailVerificationProvider, EmailVerificationTokenGenerator>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
 builder.Services.Configure<JwtOptions>(options =>

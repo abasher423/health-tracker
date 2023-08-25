@@ -25,10 +25,26 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<User> GetByEmail(string email, CancellationToken cancellationToken)
+    public async Task<User>? GetByEmail(string email, CancellationToken cancellationToken)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
         return user;
+    }
+
+    public async Task<User> GetByEmailToken(string token, CancellationToken cancellationToken)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.EmailVerificationToken == token, cancellationToken);
+        return user;
+    }
+
+    public async Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken)
+    {
+        if (await GetByEmail(email, cancellationToken) != null)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public async Task<User> CreateUser(User user, CancellationToken cancellationToken)
@@ -37,6 +53,10 @@ public class UserRepository : IUserRepository
         {
             Id = Guid.NewGuid(),
             Email = user.Email,
+            EmailConfirmed = user.EmailConfirmed,
+            EmailVerificationToken = user.EmailVerificationToken,
+            EmailVerificationTokenExpiration = user.EmailVerificationTokenExpiration,
+            EmailTokenStatus = user.EmailTokenStatus,
             HashedPassword = user.HashedPassword,
             FirstName = user.FirstName,
             LastName = user.LastName
