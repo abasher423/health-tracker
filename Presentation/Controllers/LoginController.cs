@@ -27,7 +27,7 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<LoginDto>> Register([FromBody] RegisterRequest registerRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<RegisterDto>> Register([FromBody] RegisterRequest registerRequest, CancellationToken cancellationToken)
     {
         var command = new RegisterCommand(registerRequest);
 
@@ -38,7 +38,7 @@ public class LoginController : ControllerBase
             return BadRequest();
         }
 
-        return _mapper.Map<LoginDto>(result);
+        return _mapper.Map<RegisterDto>(result);
     }
 
     [HttpPost("login")]

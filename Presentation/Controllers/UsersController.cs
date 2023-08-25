@@ -1,5 +1,3 @@
-using Application.API.V1.Login.Commands;
-using Application.API.V1.Login.Models;
 using Application.API.V1.User.Commands.Delete;
 using Application.API.V1.User.Commands.Update;
 using Application.API.V1.User.Models;

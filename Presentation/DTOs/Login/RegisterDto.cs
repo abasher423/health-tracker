@@ -1,6 +1,6 @@
-namespace Application.API.V1.Register.Models;
+namespace HealthTracker.DTOs.Login;
 
-public class RegisterModel
+public class RegisterDto
 {
     public bool Success { get; set; }
     public string Message { get; set; }
