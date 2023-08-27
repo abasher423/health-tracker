@@ -1,11 +1,11 @@
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
 using Application.API.V1.User.Models;
 using AutoMapper;
-using MediatR;
 
 namespace Application.API.V1.User.Commands.Update;
 
-public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserModel>
+public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, UserModel>
 {
     private readonly IMapper _mapper;
     private readonly IUserService _userService;

@@ -1,10 +1,10 @@
+using Application.Abstractions.Messaging;
 using Application.API.V1.UserProfile.Models;
 using Common.Enums;
-using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Update;
 
-public class UpdateUserProfileCommand : IRequest<UserProfileModel>
+public class UpdateUserProfileCommand : ICommand<UserProfileModel>
 {
     public Guid Id { get; set; }
     public int Age { get; set; }

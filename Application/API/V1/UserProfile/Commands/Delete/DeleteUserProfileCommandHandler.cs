@@ -1,10 +1,9 @@
-using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
-using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Delete;
 
-public class DeleteUserProfileCommandHandler : IRequestHandler<DeleteUserProfileCommand, bool>
+public class DeleteUserProfileCommandHandler : ICommandHandler<DeleteUserProfileCommand, bool>
 {
     private readonly IProfileService _profileService;
 

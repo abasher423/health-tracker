@@ -1,8 +1,8 @@
+using Application.Abstractions.Messaging;
 using Application.API.V1.User.Models;
-using MediatR;
 
 namespace Application.API.V1.User.Queries;
 
-public class ListUsersQuery : IRequest<IEnumerable<UserModel>>
+public class ListUsersQuery : IQuery<IEnumerable<UserModel>>
 {
 }

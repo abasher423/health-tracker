@@ -1,9 +1,9 @@
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
-using MediatR;
 
 namespace Application.API.V1.User.Commands.Delete;
 
-public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, bool>
+public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand, bool>
 {
     private readonly IUserService _userService;
 

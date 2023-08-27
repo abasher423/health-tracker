@@ -1,11 +1,10 @@
-using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
 using Application.API.V1.UserProfile.Models;
-using MediatR;
 
 namespace Application.API.V1.UserProfile.Queries;
 
-public class ListUserProfilesQueryHandler : IRequestHandler<ListUserProfilesQuery, IEnumerable<UserProfileModel>>
+public class ListUserProfilesQueryHandler : IQueryHandler<ListUserProfilesQuery, IEnumerable<UserProfileModel>>
 {
     private readonly IProfileService _profileService;
 

@@ -1,10 +1,11 @@
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
 using Application.API.V1.User.Models;
 using MediatR;
 
 namespace Application.API.V1.User.Queries;
 
-public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserModel>
+public class GetUserQueryHandler : IQueryHandler<GetUserQuery, UserModel>
 {
     private readonly IUserService _userService;
 

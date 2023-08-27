@@ -1,12 +1,11 @@
-using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
 using Application.API.V1.Login.Models;
 using AutoMapper;
-using MediatR;
 
 namespace Application.API.V1.Login.Commands;
 
-public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, LoginModel>
+public sealed class LoginCommandHandler : ICommandHandler<LoginCommand, LoginModel>
 {
     private readonly IAccountService _accountService;
     private readonly IMapper _mapper;

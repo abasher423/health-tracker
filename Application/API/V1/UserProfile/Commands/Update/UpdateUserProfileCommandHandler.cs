@@ -1,12 +1,11 @@
-using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
 using Application.API.V1.UserProfile.Models;
 using AutoMapper;
-using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Update;
 
-public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, UserProfileModel>
+public class UpdateUserProfileCommandHandler : ICommandHandler<UpdateUserProfileCommand, UserProfileModel>
 {
     private readonly IMapper _mapper;
     private readonly IProfileService _profileService;

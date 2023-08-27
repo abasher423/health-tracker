@@ -1,9 +1,9 @@
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
-using MediatR;
 
 namespace Application.API.V1.Verification.Commands;
 
-public class VerifyEmailCommandHandler : IRequestHandler<VerifyEmailCommand, bool>
+public class VerifyEmailCommandHandler : ICommandHandler<VerifyEmailCommand, bool>
 {
     private readonly IVerificationService _verificationService;
 

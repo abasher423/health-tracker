@@ -1,12 +1,11 @@
-using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
 using Application.API.V1.UserProfile.Models;
 using AutoMapper;
-using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Create;
 
-public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfileCommand, UserProfileModel>
+public class CreateUserProfileCommandHandler : ICommandHandler<CreateUserProfileCommand, UserProfileModel>
 { 
     // we will use a repository for data access so we can unit test better
     private readonly IProfileService _profileService;
