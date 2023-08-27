@@ -2,6 +2,18 @@
 
 Health Tracker is a full-stack web application built using C#, .NET 6, Angular and TypeScript. It enables users to track their health-related data, including nutrition and exercise. The application provides an intuitive user interface for logging and visualizing health data, as well as features for setting goals, generating reports and more.
 
+# Table of content
+
+- [Introduction](#introduction)
+- [Requirements](#requirements)
+- [Database Design](#database-design)
+- [Security](#security)
+- [Authentication](#authentication)
+- [Secure API Requests](#secure-api-requests)
+- [Design Patterns](#design-patterns)
+
+## Introduction
+
 **Why I used the technologies**
 
 As a full-stack software engineer, I have chosen to specialise in .NET and Angular technologies. This decision stems from my desire to gain comprehensive knowledge and expertise in these technologies, and personal projects provide an excellent opportunity for hands-on experience. By utilizing these technologies, I can enhance my skills and proficiency in their development.
@@ -78,4 +90,16 @@ User Validation: After receiving the login credentials, I validated them against
 To ensure that only authenticated users can access certain API endpoints and protect sensitive data, I utilized the [Authorize] attribute in my API endpoints. By applying this attribute, only users with valid JWT tokens can access the protected routes. This helps maintain the confidentiality and integrity of the data exchanged between the client and the server.
 
 Overall, the implementation of security and authentication measures in HealthTracker reflects my commitment to safeguarding user information and maintaining a secure environment for handling sensitive health data.
+
+## Design Patterns
+
+### Command Query Responsiblity Segregation (CQRS)
+
+I have decided to use and implement CQRS to build Health Tracker to leverage the advantages and capabilities this pattern has to offer and resolve the issues it aims to address. I decided to use CQRS to reap the rewards of the following benefits:
+
+- Single Responsibility: Commands and queries have only one reason to change. They are either changing the state of a resource or retrieving from a datasource.
+- Decoupling – The Command or Query is completely decoupled from its handler, giving you a lot of flexibility on the handler side to implement it the best way you see fit.
+- Scalability – The CQRS pattern is very flexible in terms of how you can organize your data storage, giving you options for great scalability. You can use one database for both Commands and
+- Queries. You can use separate Read/Write databases, for improved performance, with messaging or replication between the databases for synchronization.
+- Testability – It is very easy to test Command or Query handlers since they will be very simple by design, and perform only a single job.
 
