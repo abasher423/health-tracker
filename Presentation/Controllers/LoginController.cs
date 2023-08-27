@@ -27,9 +27,17 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<RegisterDto>> Register([FromBody] RegisterRequest registerRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<RegisterDto>> Register([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
-        var command = new RegisterCommand(registerRequest);
+        var validator = new RegisterCommandValidator();
+        var validationResult = validator.Validate(request);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+        
+        var command = new RegisterCommand(request);
 
         var result = await _mediator.Send(command, cancellationToken);
 
