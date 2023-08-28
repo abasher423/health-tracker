@@ -78,11 +78,26 @@ public class UserRepository : IUserRepository
             return null;
         }
 
-        userToUpdate.Email = user.Email ?? userToUpdate.Email;
-        userToUpdate.HashedPassword = user.HashedPassword ?? userToUpdate.HashedPassword;
-        userToUpdate.FirstName = user.FirstName ?? userToUpdate.FirstName;
-        userToUpdate.LastName = user.LastName ?? userToUpdate.LastName;
-        
+        if (!string.IsNullOrEmpty(user.Email))
+        {
+            userToUpdate.Email = user.Email;
+        }
+
+        if (!string.IsNullOrEmpty(user.HashedPassword))
+        {
+            userToUpdate.HashedPassword = user.HashedPassword;
+        }
+
+        if (!string.IsNullOrEmpty(user.FirstName))
+        {
+            userToUpdate.FirstName = user.FirstName;
+        }
+
+        if (!string.IsNullOrEmpty(user.LastName))
+        {
+            userToUpdate.LastName = user.LastName;
+        }
+
         _context.Entry(userToUpdate).State = EntityState.Modified;
         await _context.SaveChangesAsync(cancellationToken);
 

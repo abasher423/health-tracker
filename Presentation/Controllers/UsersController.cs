@@ -49,6 +49,14 @@ public class UsersController : ControllerBase
     [HttpPut("update/{id:guid}")]
     public async Task<IActionResult> UpdateUser([FromBody] UpdateUserModel user, Guid id)
     {
+        var validator = new UpdateUserCommandValidator();
+        var validatorResult = await validator.ValidateAsync(user);
+
+        if (!validatorResult.IsValid)
+        {
+            return BadRequest(validatorResult.Errors);
+        }
+        
         var command = new UpdateUserCommand(user, id);
 
         var result = await _mediator.Send(command);

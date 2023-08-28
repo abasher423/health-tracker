@@ -30,7 +30,7 @@ public class LoginController : ControllerBase
     public async Task<ActionResult<RegisterDto>> Register([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
         var validator = new RegisterCommandValidator();
-        var validationResult = validator.Validate(request);
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
@@ -50,9 +50,17 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<LoginDto>> Login([FromBody] LoginRequest loginRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<LoginDto>> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
     {
-        var command = new LoginCommand(loginRequest.Email, loginRequest.Password);
+        var validator = new LoginCommandValidator();
+        var validationResult =await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+        
+        var command = new LoginCommand(request.Email, request.Password);
 
         var result = await _mediator.Send(command, cancellationToken);
 
