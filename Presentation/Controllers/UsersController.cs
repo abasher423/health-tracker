@@ -30,7 +30,7 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize] // require anyone that is hitting this endpoint to be authenticated using a jwt
+    //[Authorize] // require anyone that is hitting this endpoint to be authenticated using a jwt
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<UserDto>> GetUser(Guid id)
     {
