@@ -1,9 +1,9 @@
+using Application.Abstractions.Messaging;
 using Application.API.V1.Register.Models;
-using MediatR;
 
 namespace Application.API.V1.Register.Commands;
 
-public class RegisterCommand : IRequest<RegisterModel>
+public class RegisterCommand : ICommand<RegisterModel>
 {
     public string Email { get; set; }
     public string Password { get; set; }

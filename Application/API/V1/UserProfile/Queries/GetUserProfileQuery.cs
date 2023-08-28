@@ -1,9 +1,9 @@
+using Application.Abstractions.Messaging;
 using Application.API.V1.UserProfile.Models;
-using MediatR;
 
 namespace Application.API.V1.UserProfile.Queries;
 
-public class GetUserProfileQuery : IRequest<UserProfileModel>
+public class GetUserProfileQuery : IQuery<UserProfileModel>
 {
     public Guid Id { get; set; }
     public GetUserProfileQuery(Guid id)

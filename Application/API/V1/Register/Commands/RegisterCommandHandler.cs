@@ -1,12 +1,11 @@
-using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
 using Application.API.V1.Register.Models;
 using AutoMapper;
-using MediatR;
 
 namespace Application.API.V1.Register.Commands;
 
-public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterModel>
+public class RegisterCommandHandler : ICommandHandler<RegisterCommand, RegisterModel>
 {
     private readonly IMapper _mapper;
     private readonly IAccountService _accountService;

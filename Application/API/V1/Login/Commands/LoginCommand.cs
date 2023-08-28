@@ -1,12 +1,12 @@
+using Application.Abstractions.Messaging;
 using Application.API.V1.Login.Models;
-using MediatR;
 
 namespace Application.API.V1.Login.Commands;
 
-public class LoginCommand : IRequest<LoginModel>
+public class LoginCommand : ICommand<LoginModel>
 {
-    public string Email { get; }
-    public string Password { get; }
+    public string Email { get; set; }
+    public string Password { get; set; }
     
     public LoginCommand(string email, string password)
     {

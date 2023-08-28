@@ -1,9 +1,9 @@
+using Application.Abstractions.Messaging;
 using Application.API.V1.User.Models;
-using MediatR;
 
 namespace Application.API.V1.User.Commands.Update;
 
-public class UpdateUserCommand : IRequest<UserModel>
+public class UpdateUserCommand : ICommand<UserModel>
 {
     public Guid Id { get; set; }
     public string Email { get; set; }

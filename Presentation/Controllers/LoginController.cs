@@ -27,9 +27,17 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<RegisterDto>> Register([FromBody] RegisterRequest registerRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<RegisterDto>> Register([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
-        var command = new RegisterCommand(registerRequest);
+        var validator = new RegisterCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+        
+        var command = new RegisterCommand(request);
 
         var result = await _mediator.Send(command, cancellationToken);
 
@@ -42,9 +50,17 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<LoginDto>> Login([FromBody] LoginRequest loginRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<LoginDto>> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
     {
-        var command = new LoginCommand(loginRequest.Email, loginRequest.Password);
+        var validator = new LoginCommandValidator();
+        var validationResult =await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+        
+        var command = new LoginCommand(request.Email, request.Password);
 
         var result = await _mediator.Send(command, cancellationToken);
 

@@ -1,10 +1,10 @@
+using Application.Abstractions.Messaging;
 using Application.API.V1.UserProfile.Models;
 using Common.Enums;
-using MediatR;
 
 namespace Application.API.V1.UserProfile.Commands.Create;
 
-public class CreateUserProfileCommand : IRequest<UserProfileModel>
+public class CreateUserProfileCommand : ICommand<UserProfileModel>
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
