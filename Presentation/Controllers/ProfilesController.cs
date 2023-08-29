@@ -46,9 +46,17 @@ public class ProfilesController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<UserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileModel userProfile)
+    public async Task<ActionResult<UserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileModel request)
     {
-        var command = new CreateUserProfileCommand(userProfile);
+        var validator = new CreateUserProfileCommandValidator();
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+        
+        var command = new CreateUserProfileCommand(request);
 
         var result = await _mediator.Send(command);
 
