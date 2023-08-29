@@ -1,5 +1,5 @@
 
-using Application.API.V1.UserProfile.Models;
+using Application.API.V1.Profile.Models;
 
 namespace Application.Abstractions.Services;
 

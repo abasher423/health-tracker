@@ -1,8 +1,8 @@
-using Application.API.V1.UserProfile.Commands.Create;
-using Application.API.V1.UserProfile.Commands.Delete;
-using Application.API.V1.UserProfile.Commands.Update;
-using Application.API.V1.UserProfile.Models;
-using Application.API.V1.UserProfile.Queries;
+using Application.API.V1.Profile.Commands.Create;
+using Application.API.V1.Profile.Commands.Delete;
+using Application.API.V1.Profile.Commands.Update;
+using Application.API.V1.Profile.Models;
+using Application.API.V1.Profile.Queries;
 using HealthTracker.DTOs.UserProfile;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +48,7 @@ public class ProfilesController : ControllerBase
     [HttpPost("create")]
     public async Task<ActionResult<CreateUserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileModel request)
     {
-        var validator = new CreateUserProfileCommandValidator();
+        var validator = new CreateProfileCommandValidator();
         var validationResult = await validator.ValidateAsync(request);
 
         if (!validationResult.IsValid)
@@ -56,7 +56,7 @@ public class ProfilesController : ControllerBase
             return BadRequest(validationResult.Errors);
         }
         
-        var command = new CreateUserProfileCommand(request);
+        var command = new CreateProfileCommand(request);
 
         var result = await _mediator.Send(command);
 
@@ -71,7 +71,7 @@ public class ProfilesController : ControllerBase
     [HttpPut("update/{id:guid}")]
     public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileModel userProfile, Guid id)
     {
-        var command = new UpdateUserProfileCommand(userProfile, id);
+        var command = new ProfileCommand(userProfile, id);
 
         var result = await _mediator.Send(command);
 
@@ -86,7 +86,7 @@ public class ProfilesController : ControllerBase
     [HttpDelete("delete/{id:guid}")]
     public async Task<IActionResult> DeleteUserProfile(Guid id)
     {
-        var userProfile = new DeleteUserProfileCommand(id);
+        var userProfile = new DeleteProfileCommand(id);
         
         var result = await _mediator.Send(userProfile);
 

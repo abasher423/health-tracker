@@ -1,23 +1,23 @@
 using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
-using Application.API.V1.UserProfile.Models;
+using Application.API.V1.Profile.Models;
 using AutoMapper;
 
-namespace Application.API.V1.UserProfile.Commands.Create;
+namespace Application.API.V1.Profile.Commands.Create;
 
-public class CreateUserProfileCommandHandler : ICommandHandler<CreateUserProfileCommand, UserProfileModel>
+public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand, UserProfileModel>
 { 
     // we will use a repository for data access so we can unit test better
     private readonly IProfileService _profileService;
     private readonly IMapper _mapper;
     
-    public CreateUserProfileCommandHandler(IProfileService profileService, IMapper mapper)
+    public CreateProfileCommandHandler(IProfileService profileService, IMapper mapper)
     {
         _profileService = profileService;
         _mapper = mapper;
     }
 
-    public async Task<UserProfileModel> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
+    public async Task<UserProfileModel> Handle(CreateProfileCommand request, CancellationToken cancellationToken)
     {
         if (request == null)
         {

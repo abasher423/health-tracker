@@ -1,11 +1,11 @@
-using Application.API.V1.UserProfile.Models;
+using Application.API.V1.Profile.Models;
 using FluentValidation;
 
-namespace Application.API.V1.UserProfile.Commands.Create;
+namespace Application.API.V1.Profile.Commands.Create;
 
-public class CreateUserProfileCommandValidator : AbstractValidator<CreateUserProfileModel>
+public class CreateProfileCommandValidator : AbstractValidator<CreateUserProfileModel>
 {
-    public CreateUserProfileCommandValidator()
+    public CreateProfileCommandValidator()
     {
         RuleFor(profile => profile.UserId).NotNull();
         

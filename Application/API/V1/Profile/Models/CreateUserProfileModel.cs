@@ -1,10 +1,9 @@
 using Common.Enums;
 
-namespace Application.API.V1.UserProfile.Models;
+namespace Application.API.V1.Profile.Models;
 
-public class UserProfileModel
+public class CreateUserProfileModel
 {
-    public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public int Age { get; set; }
     public Gender Gender { get; set; }
