@@ -1,3 +1,4 @@
+using Common.Exceptions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
@@ -28,7 +29,14 @@ public class UserProfileRepository : IUserProfileRepository
 
     public async Task<UserProfile> CreateUserProfile(UserProfile userProfile, CancellationToken cancellationToken)
     {
-        var userProfileToBeAdded = new Domain.Entities.UserProfile()
+        var existingProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.UserId == userProfile.UserId, cancellationToken);
+
+        if (existingProfile != null)
+        {
+            throw new ProfileArgumentException("A profile with the provided user ID already exists.");
+        }
+        
+        var userProfileToBeAdded = new UserProfile()
         {
             Id = new Guid(),
             UserId = userProfile.UserId,

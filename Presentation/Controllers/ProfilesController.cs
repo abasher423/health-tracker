@@ -46,7 +46,7 @@ public class ProfilesController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<UserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileModel request)
+    public async Task<ActionResult<CreateUserProfileDto>> CreateUserProfile([FromBody] CreateUserProfileModel request)
     {
         var validator = new CreateUserProfileCommandValidator();
         var validationResult = await validator.ValidateAsync(request);

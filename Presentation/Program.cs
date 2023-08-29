@@ -22,6 +22,7 @@ using Persistence.Configurations.Context;
 using AutoMapper.EquivalencyExpression;
 using FluentValidation;
 using HealthTracker.Mappings;
+using HealthTracker.Middlewares;
 using HealthTracker.OptionsSetup;
 using Infrastructure;
 using Infrastructure.Authentication;
@@ -83,7 +84,7 @@ builder.Services.AddScoped<IRequestHandler<GetUserQuery, UserModel>, GetUserQuer
 builder.Services.AddScoped<IRequestHandler<ListUserProfilesQuery, IEnumerable<UserProfileModel>>, ListUserProfilesQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<ListUsersQuery, IEnumerable<UserModel>>, ListUsersQueryHandler>();
 
-builder.Services.AddScoped<IValidator<CreateUserProfileCommand>, CreateUserProfileCommandValidator>();
+//builder.Services.AddScoped<IValidator<CreateUserProfileCommand>, CreateUserProfileCommandValidator>();
 
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IEmailVerificationProvider, EmailVerificationTokenGenerator>();
@@ -137,6 +138,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionMiddleware();
 
 app.UseHttpsRedirection();
 
