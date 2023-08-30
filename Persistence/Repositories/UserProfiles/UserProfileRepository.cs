@@ -23,12 +23,19 @@ public class UserProfileRepository : IUserProfileRepository
     public async Task<UserProfile> GetSingleUserProfile(Guid id, CancellationToken cancellationToken)
     {
         var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        if (userProfile == null)
+        {
+            throw new ProfileArgumentException("Please provide a valid user profile ID");
+        }
+        
         return userProfile;
     }
 
 
     public async Task<UserProfile> CreateUserProfile(UserProfile userProfile, CancellationToken cancellationToken)
     {
+        await CheckUserExists(userProfile.UserId, cancellationToken);
         await CheckProfileExists(userProfile.UserId, cancellationToken);
         
         var userProfileToBeAdded = new UserProfile()
@@ -87,7 +94,9 @@ public class UserProfileRepository : IUserProfileRepository
         var userProfileToDelete = _context.UserProfiles.FirstOrDefault(x => x.Id == id);
 
         if (userProfileToDelete == null)
-            return false;
+        {
+            throw new ProfileArgumentException("The user profile to delete was not found.");
+        }
 
         _context.UserProfiles.Remove(userProfileToDelete);
         await _context.SaveChangesAsync(cancellationToken);
@@ -102,6 +111,16 @@ public class UserProfileRepository : IUserProfileRepository
         if (existingProfile != null)
         {
             throw new ProfileArgumentException("A profile with the provided user ID already exists.");
+        }
+    }
+    
+    private async Task CheckUserExists(Guid userId, CancellationToken cancellationToken)
+    {
+        var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId, cancellationToken);
+
+        if (existingUser == null)
+        {
+            throw new ProfileArgumentException("Please provide a valid user ID");
         }
     }
 }
