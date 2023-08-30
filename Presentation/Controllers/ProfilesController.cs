@@ -69,9 +69,17 @@ public class ProfilesController : ControllerBase
     }
 
     [HttpPut("update/{id:guid}")]
-    public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileModel userProfile, Guid id)
+    public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileModel request, Guid id)
     {
-        var command = new ProfileCommand(userProfile, id);
+        var validator = new ProfileCommandValidator();
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+        
+        var command = new ProfileCommand(request, id);
 
         var result = await _mediator.Send(command);
 

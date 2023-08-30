@@ -2,6 +2,7 @@ using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
 using Application.API.V1.Profile.Models;
 using AutoMapper;
+using Common.Exceptions;
 
 namespace Application.API.V1.Profile.Commands.Update;
 
@@ -21,6 +22,11 @@ public class ProfileCommandHandler : ICommandHandler<ProfileCommand, UserProfile
         if (request == null)
         {
             throw new ArgumentNullException();
+        }
+
+        if (request.Id == null || request.Id == Guid.Empty)
+        {
+            throw new ProfileArgumentException("Please provide a valid User ID.");
         }
 
         var mappedProfile = _mapper.Map<UserProfileModel>(request);

@@ -9,7 +9,7 @@ public class CreateProfileCommandValidator : AbstractValidator<CreateUserProfile
     {
         RuleFor(profile => profile.UserId).NotNull();
         
-        RuleFor(profile => profile.Age).NotNull().InclusiveBetween(18, 95);
+        RuleFor(profile => profile.Age).NotNull().InclusiveBetween(18, 100);
         
         RuleFor(profile => profile.Height).NotNull().InclusiveBetween(5, 300);
         
