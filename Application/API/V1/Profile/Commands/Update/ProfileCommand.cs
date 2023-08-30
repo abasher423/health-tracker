@@ -1,10 +1,10 @@
 using Application.Abstractions.Messaging;
-using Application.API.V1.UserProfile.Models;
+using Application.API.V1.Profile.Models;
 using Common.Enums;
 
-namespace Application.API.V1.UserProfile.Commands.Update;
+namespace Application.API.V1.Profile.Commands.Update;
 
-public class UpdateUserProfileCommand : ICommand<UserProfileModel>
+public class ProfileCommand : ICommand<UserProfileModel>
 {
     public Guid Id { get; set; }
     public int Age { get; set; }
@@ -12,7 +12,7 @@ public class UpdateUserProfileCommand : ICommand<UserProfileModel>
     public decimal Height { get; set; }
     public decimal Weight { get; set; }
 
-    public UpdateUserProfileCommand(UpdateUserProfileModel user, Guid id)
+    public ProfileCommand(UpdateUserProfileModel user, Guid id)
     {
         Id = id;
         Age = user.Age;

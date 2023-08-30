@@ -1,5 +1,6 @@
-using Application.API.V1.UserProfile.Commands.Update;
-using Application.API.V1.UserProfile.Models;
+using Application.API.V1.Profile.Commands.Create;
+using Application.API.V1.Profile.Commands.Update;
+using Application.API.V1.Profile.Models;
 using AutoMapper;
 using Domain.Entities;
 
@@ -9,6 +10,10 @@ public class UserProfileMappingProfile : Profile
 {
     public UserProfileMappingProfile()
     {
-        
+        CreateMap<CreateProfileCommand, UserProfileModel>().ReverseMap();
+
+        CreateMap<UserProfileModel, UserProfile>().ReverseMap();
+
+        CreateMap<ProfileCommand, UserProfileModel>().ReverseMap();
     }
 }

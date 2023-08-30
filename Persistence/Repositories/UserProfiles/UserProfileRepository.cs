@@ -1,3 +1,4 @@
+using Common.Exceptions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
@@ -22,13 +23,22 @@ public class UserProfileRepository : IUserProfileRepository
     public async Task<UserProfile> GetSingleUserProfile(Guid id, CancellationToken cancellationToken)
     {
         var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        if (userProfile == null)
+        {
+            throw new ProfileArgumentException("Please provide a valid user profile ID");
+        }
+        
         return userProfile;
     }
 
 
     public async Task<UserProfile> CreateUserProfile(UserProfile userProfile, CancellationToken cancellationToken)
     {
-        var userProfileToBeAdded = new Domain.Entities.UserProfile()
+        await CheckUserExists(userProfile.UserId, cancellationToken);
+        await CheckProfileExists(userProfile.UserId, cancellationToken);
+        
+        var userProfileToBeAdded = new UserProfile()
         {
             Id = new Guid(),
             UserId = userProfile.UserId,
@@ -49,12 +59,29 @@ public class UserProfileRepository : IUserProfileRepository
         var userProfileToUpdate = _context.UserProfiles.FirstOrDefault(x => x.Id == userProfile.Id);
 
         if (userProfileToUpdate == null)
-            return null;
+        {
+            throw new ProfileArgumentException("The user profile to update was not found.");
+        }
 
-        userProfileToUpdate.Gender = userProfile.Gender != null ? userProfile.Gender : userProfileToUpdate.Gender;
-        userProfileToUpdate.Age = userProfile.Age != 0 ? userProfile.Age : userProfileToUpdate.Age;
-        userProfileToUpdate.Height = userProfile.Height != 0 ? userProfile.Height : userProfileToUpdate.Height;
-        userProfileToUpdate.Weight = userProfile.Weight != 0 ? userProfile.Weight : userProfileToUpdate.Weight;
+        if (!string.IsNullOrEmpty(userProfile.Gender.ToString()))
+        {
+            userProfileToUpdate.Gender = userProfile.Gender;
+        }
+
+        if (!string.IsNullOrEmpty(userProfile.Age.ToString()) || userProfile.Age > 0)
+        {
+            userProfileToUpdate.Age = userProfile.Age;
+        }
+
+        if (!string.IsNullOrEmpty(userProfile.Height.ToString()) || userProfile.Height > 0)
+        {
+            userProfileToUpdate.Height = userProfile.Height;
+        }
+
+        if (!string.IsNullOrEmpty(userProfile.Weight.ToString()) || userProfile.Weight > 0)
+        {
+            userProfileToUpdate.Weight = userProfile.Weight;
+        }
 
         _context.Entry(userProfileToUpdate).State = EntityState.Modified;
         await _context.SaveChangesAsync(cancellationToken);
@@ -67,11 +94,33 @@ public class UserProfileRepository : IUserProfileRepository
         var userProfileToDelete = _context.UserProfiles.FirstOrDefault(x => x.Id == id);
 
         if (userProfileToDelete == null)
-            return false;
+        {
+            throw new ProfileArgumentException("The user profile to delete was not found.");
+        }
 
         _context.UserProfiles.Remove(userProfileToDelete);
         await _context.SaveChangesAsync(cancellationToken);
 
         return true;
+    }
+
+    private async Task CheckProfileExists(Guid id, CancellationToken cancellationToken)
+    {
+        var existingProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.UserId == id, cancellationToken);
+
+        if (existingProfile != null)
+        {
+            throw new ProfileArgumentException("A profile with the provided user ID already exists.");
+        }
+    }
+    
+    private async Task CheckUserExists(Guid userId, CancellationToken cancellationToken)
+    {
+        var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId, cancellationToken);
+
+        if (existingUser == null)
+        {
+            throw new ProfileArgumentException("Please provide a valid user ID");
+        }
     }
 }

@@ -1,10 +1,10 @@
 using Application.Abstractions.Messaging;
-using Application.API.V1.UserProfile.Models;
+using Application.API.V1.Profile.Models;
 using Common.Enums;
 
-namespace Application.API.V1.UserProfile.Commands.Create;
+namespace Application.API.V1.Profile.Commands.Create;
 
-public class CreateUserProfileCommand : ICommand<UserProfileModel>
+public class CreateProfileCommand : ICommand<UserProfileModel>
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
@@ -13,7 +13,7 @@ public class CreateUserProfileCommand : ICommand<UserProfileModel>
     public decimal Height { get; set; }
     public decimal Weight { get; set; }
 
-    public CreateUserProfileCommand(CreateUserProfileModel profile)
+    public CreateProfileCommand(CreateUserProfileModel profile)
     {
         UserId = profile.UserId;
         Age = profile.Age;

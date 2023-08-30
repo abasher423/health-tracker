@@ -1,6 +1,6 @@
 using Application.Abstractions;
 using Application.Abstractions.Services;
-using Application.API.V1.UserProfile.Models;
+using Application.API.V1.Profile.Models;
 using AutoMapper;
 using Domain.Entities;
 using Persistence.Repositories.UserProfiles;

@@ -1,4 +1,4 @@
-using Application.API.V1.UserProfile.Commands.Delete;
+using Application.API.V1.Profile.Commands.Delete;
 
 namespace Tests.Application.API.UserProfile.Commands.Delete;
 
@@ -11,7 +11,7 @@ public class DeleteUserProfileCommandTests
         var id = Guid.NewGuid();
 
         // Act
-        var command = new DeleteUserProfileCommand(id);
+        var command = new DeleteProfileCommand(id);
         
         // Assert
         Assert.Equal(id, command.Id);
