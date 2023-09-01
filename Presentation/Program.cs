@@ -20,7 +20,6 @@ using Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Context;
 using AutoMapper.EquivalencyExpression;
-using FluentValidation;
 using HealthTracker.Mappings;
 using HealthTracker.Middlewares;
 using HealthTracker.OptionsSetup;
@@ -31,6 +30,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
+using Persistence.Repositories.HealthDataEntries;
 using Persistence.Repositories.UserProfiles;
 using Persistence.Repositories.Users;
 
@@ -67,6 +67,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserService, UserServices>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IHealthDataEntryRepository, HealthDataEntryRepository>();
 
 // commands
 builder.Services.AddScoped<IRequestHandler<LoginCommand, LoginModel>, LoginCommandHandler>();
