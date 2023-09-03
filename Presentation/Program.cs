@@ -2,6 +2,10 @@
 using System.Text;
 using Application.Abstractions;
 using Application.Abstractions.Services;
+using Application.API.V1.HealthDataEntry.Commands.Create;
+using Application.API.V1.HealthDataEntry.Commands.Delete;
+using Application.API.V1.HealthDataEntry.Commands.Update;
+using Application.API.V1.HealthDataEntry.Models;
 using Application.API.V1.Login.Commands;
 using Application.API.V1.Login.Models;
 using Application.API.V1.Profile.Commands.Create;
@@ -60,6 +64,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Get
 // repositories
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IHealthDataEntryRepository, HealthDataEntryRepository>();
 
 // services
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -67,7 +72,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserService, UserServices>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
-builder.Services.AddScoped<IHealthDataEntryRepository, HealthDataEntryRepository>();
+builder.Services.AddScoped<IHealthDataEntryService, HealthDataEntryService>();
 
 // commands
 builder.Services.AddScoped<IRequestHandler<LoginCommand, LoginModel>, LoginCommandHandler>();
@@ -78,6 +83,9 @@ builder.Services.AddScoped<IRequestHandler<ProfileCommand, UserProfileModel>, Pr
 builder.Services.AddScoped<IRequestHandler<UpdateUserCommand, UserModel>, UpdateUserCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteProfileCommand, bool>, DeleteProfileCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateHealthDataEntryCommand, HealthDataEntryModel>, CreateHealthDataEntryCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateHealthDataEntryCommand, HealthDataEntryModel>, UpdateHealthDataEntryCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteHealthDataEntryCommand, bool>, DeleteHealthDataEntryCommandHandler>();
 
 // queries
 builder.Services.AddScoped<IRequestHandler<GetUserProfileQuery, UserProfileModel>, GetUserProfileQueryHandler>();
