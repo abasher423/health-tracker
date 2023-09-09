@@ -27,40 +27,45 @@ public class ProfileService : IProfileService
     public async Task<UserProfileModel> GetProfile(Guid id, CancellationToken cancellationToken)
     {
         var profile = await _userProfileRepository.GetSingleUserProfile(id, cancellationToken);
-
-        // do we want to throw an exception?
-        if (profile == null)
-            return null; 
-        
         return _mapper.Map<UserProfileModel>(profile);
     }
 
     public async Task<UserProfileModel> CreateProfile(UserProfileModel profile, CancellationToken cancellationToken)
     {
-        var userProfile = _mapper.Map<UserProfile>(profile);
-        var createdProfile = await _userProfileRepository.CreateUserProfile(userProfile, cancellationToken);
+        var userProfileToCreate = new UserProfile()
+        {
+            Id = Guid.NewGuid(),
+            UserId = profile.UserId,
+            Gender = profile.Gender,
+            Age = profile.Age,
+            Height = profile.Height,
+            Weight = profile.Weight
+        };
         
-        // do we want to throw an exception?
-        if (createdProfile == null)
-            return null;
+        var createdProfile = await _userProfileRepository.CreateUserProfile(userProfileToCreate, cancellationToken);
 
-        return profile;
+        return _mapper.Map<UserProfileModel>(createdProfile);
     }
 
     public async Task<UserProfileModel> UpdateProfile(UserProfileModel profile, CancellationToken cancellationToken)
     {
-        var userProfile = _mapper.Map<UserProfile>(profile);
-        var updatedProfile = await _userProfileRepository.UpdateUserProfile(userProfile, cancellationToken);
+        var userProfileToUpdate = new UserProfile()
+        {
+            Id = profile.Id,
+            UserId = profile.UserId,
+            Gender = profile.Gender,
+            Age = profile.Age,
+            Height = profile.Height,
+            Weight = profile.Weight
+        };
+        
+        var updatedProfile = await _userProfileRepository.UpdateUserProfile(userProfileToUpdate, cancellationToken);
 
-        if (updatedProfile == null)
-            return null;
-
-        return profile;
+        return _mapper.Map<UserProfileModel>(updatedProfile);
     }
 
     public async Task<bool> DeleteProfile(Guid id, CancellationToken cancellationToken)
     {
-        var isProfileDeleted = await _userProfileRepository.DeleteUserProfile(id, cancellationToken);
-        return isProfileDeleted;
+        return await _userProfileRepository.DeleteUserProfile(id, cancellationToken);
     }
 }
