@@ -1,9 +1,10 @@
 using Common.Enums;
 
-namespace Application.API.V1.HealthDataEntry.Models;
+namespace HealthTracker.DTOs.HealthDataEntry;
 
-public class UpdateHealthDataEntryModel
+public class HealthDataEntryDto
 {
+    public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public HealthDataName Name { get; set; }
     public decimal Value { get; set; }

@@ -11,9 +11,9 @@ public class UpdateHealthDataEntryCommand : ICommand<HealthDataEntryModel>
     public HealthDataName Name { get; set; }
     public decimal Value { get; set; }
 
-    public UpdateHealthDataEntryCommand(UpdateHealthDataEntryModel model)
+    public UpdateHealthDataEntryCommand(UpdateHealthDataEntryModel model, Guid id)
     {
-        Id = model.Id;
+        Id = id;
         UserId = model.UserId;
         Name = model.Name;
         Value = model.Value;
