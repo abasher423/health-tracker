@@ -39,6 +39,7 @@ public class HealthDataEntryRepository : IHealthDataEntryRepository
         {
             Id = Guid.NewGuid(),
             UserId = healthDataEntry.UserId,
+            HealthMetricId = healthDataEntry.HealthMetricId,
             Name = healthDataEntry.Name,
             Value = healthDataEntry.Value
         };
@@ -62,6 +63,11 @@ public class HealthDataEntryRepository : IHealthDataEntryRepository
         if (!string.IsNullOrEmpty(healthDataEntry.UserId.ToString()))
         {
             entry.UserId = healthDataEntry.UserId;
+        }
+
+        if (!string.IsNullOrEmpty(healthDataEntry.HealthMetricId.ToString()))
+        {
+            entry.HealthMetricId = healthDataEntry.HealthMetricId;
         }
 
         if (!string.IsNullOrEmpty(healthDataEntry.Name.ToString()))

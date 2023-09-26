@@ -52,6 +52,13 @@ public class HealthDataEntryController : ControllerBase
     [HttpPost("/create")]
     public async Task<IActionResult> CreateHealthDataEntry([FromBody] CreateHealthDataEntryModel request)
     {
+        var validator = new CreateHealthDataEntryValidator();
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
         var command = new CreateHealthDataEntryCommand(request);
 
         var result = await _mediator.Send(command);

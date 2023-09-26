@@ -6,6 +6,7 @@ public class HealthDataEntryModel
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
+    public Guid HealthMetricId { get; set; }
     public HealthDataName Name { get; set; }
     public decimal Value { get; set; }
 }
