@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Application.API.V1.HealthDataEntry.Commands.Create;
 
-public class CreateHealthDataEntryValidator : AbstractValidator<CreateHealthDataEntryModel>
+public class CreateHealthDataEntryCommandValidator : AbstractValidator<CreateHealthDataEntryModel>
 {
-    public CreateHealthDataEntryValidator()
+    public CreateHealthDataEntryCommandValidator()
     {
         RuleFor(x => x.UserId).NotNull();
 
