@@ -52,6 +52,13 @@ public class HealthDataEntryController : ControllerBase
     [HttpPost("/create")]
     public async Task<IActionResult> CreateHealthDataEntry([FromBody] CreateHealthDataEntryModel request)
     {
+        var validator = new CreateHealthDataEntryCommandValidator();
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
         var command = new CreateHealthDataEntryCommand(request);
 
         var result = await _mediator.Send(command);
@@ -67,6 +74,14 @@ public class HealthDataEntryController : ControllerBase
     [HttpPut("update/{id:guid}")]
     public async Task<IActionResult> UpdateHealthDataEntry([FromBody] UpdateHealthDataEntryModel request, Guid id)
     {
+        var validator = new UpdateHealthDataEntryCommandValidator();
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+        
         var command = new UpdateHealthDataEntryCommand(request, id);
 
         var result = _mediator.Send(command);
