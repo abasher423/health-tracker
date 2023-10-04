@@ -56,7 +56,7 @@ The following diagram is an ERD (Entity-Relationship Diagram) which is a visual 
 
 ## Security
 
-I have decided to use RS and here is my thought process:
+I have decided to use RSA and here is my thought process:
 
 1. HS256 (HMAC-SHA256): HS256 uses a symmetric key to both sign and verify the token. This means that the same secret key is used for both token creation and validation. HS256 can provide a good level of security if you can securely manage and protect the secret key. It is relatively simple to implement and performant.
 2. SHA256: SHA256 is a cryptographic hash function, not a signing algorithm. It is commonly used in combination with other algorithms, such as RSA or ECDSA. If you are considering SHA256 alone, it may not be sufficient for token validation, as it does not provide a built-in mechanism for signing or verifying tokens.
