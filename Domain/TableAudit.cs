@@ -1,3 +1,5 @@
+using Domain.Interfaces.V1;
+
 namespace Domain;
 
 public class TableAudit : ITableAudit
