@@ -4,11 +4,11 @@ using Persistence.Repositories.HealthDataEntries;
 
 namespace Application.Events.V1.HealthMetric;
 
-public class HealthMetricLoggedDomainEventHandler : INotificationHandler<HealthMetricCreatedDomainEvent>
+public class HealthMetricLoggedCreatedEventHandler : INotificationHandler<HealthMetricCreatedDomainEvent>
 {
     private readonly IHealthDataEntryRepository _healthDataEntryRepository;
 
-    public HealthMetricLoggedDomainEventHandler(IHealthDataEntryRepository healthDataEntryRepository)
+    public HealthMetricLoggedCreatedEventHandler(IHealthDataEntryRepository healthDataEntryRepository)
     {
         _healthDataEntryRepository = healthDataEntryRepository;
     }
