@@ -35,14 +35,8 @@ public class HealthDataEntryRepository : IHealthDataEntryRepository
 
     public async Task<HealthDataEntry> CreateHealthDataEntry(HealthDataEntry healthDataEntry, CancellationToken cancellationToken)
     {
-        var entryToBeCreated = new HealthDataEntry()
-        {
-            Id = Guid.NewGuid(),
-            UserId = healthDataEntry.UserId,
-            HealthMetricId = healthDataEntry.HealthMetricId,
-            Name = healthDataEntry.Name,
-            Value = healthDataEntry.Value
-        };
+        var entryToBeCreated = new HealthDataEntry(Guid.NewGuid(), healthDataEntry.UserId,
+            healthDataEntry.HealthMetricId, healthDataEntry.Name, healthDataEntry.Value);
 
         await _context.HealthDataEntries.AddAsync(entryToBeCreated, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);

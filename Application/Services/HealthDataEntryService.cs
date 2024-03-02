@@ -30,14 +30,9 @@ public class HealthDataEntryService : IHealthDataEntryService
     }
 
     public async Task<HealthDataEntryModel> CreateHealthDataEntry(HealthDataEntryModel healthDataEntry, CancellationToken cancellationToken)
-    {
-        var entryToCreate = new HealthDataEntry()
-        {
-            Id = Guid.NewGuid(),
-            UserId = healthDataEntry.UserId,
-            Name = healthDataEntry.Name,
-            Value = healthDataEntry.Value
-        };
+    { 
+        var entryToCreate = new HealthDataEntry(Guid.NewGuid(), healthDataEntry.UserId, healthDataEntry.HealthMetricId,
+            healthDataEntry.Name, healthDataEntry.Value);
 
         var createdEntry = await _healthDataEntryRepository.CreateHealthDataEntry(entryToCreate, cancellationToken);
 

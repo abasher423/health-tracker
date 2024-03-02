@@ -20,4 +20,9 @@ public class BaseEntity : TableAudit
     {
         _domainEvents?.Remove(domainEvent);
     }
+
+    public void ClearDomainEvents()
+    {
+        _domainEvents?.Clear();
+    }
 }
