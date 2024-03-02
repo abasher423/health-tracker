@@ -8,8 +8,8 @@ public class HealthMetricCreatedDomainEvent : INotification
     public Guid Id { get; }
     public Guid UserId { get; }
     public Guid HealthMetricId { get; }
-    public HealthDataName Name { get; }
-    public decimal Value { get; }
+    public HealthDataName? Name { get; }
+    public decimal? Value { get; }
 
     public HealthMetricCreatedDomainEvent(Guid id, Guid userId, Guid healthMetricId, decimal value, 
            HealthDataName name)
