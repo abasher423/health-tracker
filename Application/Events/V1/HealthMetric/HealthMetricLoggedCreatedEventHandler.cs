@@ -24,13 +24,11 @@ public class HealthMetricLoggedCreatedEventHandler : INotificationHandler<Health
 
         await _healthDataEntryRepository.UpdateHealthDataEntry(healthDataEntry, cancellationToken);
         
-        // When a health metric/data has been logged... what do we want to do?
+        // Update the planner? (Possible future enhancement)
         
-        // Update the planner? 
-        
-        // Calculate averages (update aggregates - what does that mean?)
+        // Calculate averages (update aggregates)
 
-        // Trigger notifications or alerts based on the logged health metric
+        // Trigger notifications or alerts based on the logged health metric (Possible future enhancement)
         
         throw new NotImplementedException();
     }
