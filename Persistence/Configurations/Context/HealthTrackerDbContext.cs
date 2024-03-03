@@ -1,12 +1,16 @@
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
+using Domain.Interfaces.V1;
+using MediatR;
 using Persistence.Configurations.EntityConfigurations;
 
 namespace Persistence.Configurations.Context;
 
 public class HealthTrackerDbContext : DbContext
 {
+    private readonly IMediator _mediator;
+    
     public DbSet<User> Users { get; set; }
 
     public DbSet<UserProfile> UserProfiles { get; set; }
@@ -19,8 +23,9 @@ public class HealthTrackerDbContext : DbContext
     
     public DbSet<Progress> Progresses { get; set; }
     
-    public HealthTrackerDbContext(DbContextOptions<HealthTrackerDbContext> options) : base(options)
+    public HealthTrackerDbContext(DbContextOptions<HealthTrackerDbContext> options, IMediator mediator) : base(options)
     {
+        _mediator = mediator;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,6 +64,16 @@ public class HealthTrackerDbContext : DbContext
                 ((BaseEntity)entityEntry.Entity).Modified = DateTime.UtcNow;
             }
         }
+        
+        // Dispatch Domain Events collection.
+        // Choices:
+        // A) Right BEFORE committing data (EF SaveChanges) into the DB. This makes
+        // a single transaction including side effects from the domain event
+        // handlers that are using the same DbContext with Scope lifetime
+        // B) Right AFTER committing data (EF SaveChanges) into the DB. This makes
+        // multiple transactions. You will need to handle eventual consistency and
+        // compensatory actions in case of failures.
+        await _mediator.Publish(this, cancellationToken);
 
         return await base.SaveChangesAsync(cancellationToken);
     }

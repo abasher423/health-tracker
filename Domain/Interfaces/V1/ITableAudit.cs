@@ -1,4 +1,4 @@
-namespace Domain;
+namespace Domain.Interfaces.V1;
 
 public interface ITableAudit
 {
