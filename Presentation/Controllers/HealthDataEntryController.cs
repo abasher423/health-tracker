@@ -14,12 +14,10 @@ namespace HealthTracker.Controllers;
 [ApiController]
 public class HealthDataEntryController : ControllerBase
 {
-    private readonly IHealthDataEntryService _healthDataEntryService;
     private readonly IMediator _mediator;
 
-    public HealthDataEntryController(IHealthDataEntryService healthDataEntryService, IMediator mediator)
+    public HealthDataEntryController(IMediator mediator)
     {
-        _healthDataEntryService = healthDataEntryService;
         _mediator = mediator;
     }
 
