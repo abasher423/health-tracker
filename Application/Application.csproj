@@ -21,7 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="API\V1\HealthMetric\Commands\" />
       <Folder Include="API\V1\HealthMetric\Queries\" />
     </ItemGroup>
 
